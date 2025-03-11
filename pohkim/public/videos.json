@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "title": "Cosmic Odyssey",
+    "description": "A team of astronauts embarks on a perilous journey to save humanity from an impending global catastrophe. As they venture into the unknown reaches of space, they discover secrets about the universe that challenge everything they know.",
+    "releaseDate": "2023-01-15",
+    "genre": "Sci-Fi",
+    "thumbnail": "/images/cosmic-odyssey.jpg",
+    "duration": "2h 35m",
+    "rating": 4.7
+  },
+  {
+    "id": 2,
+    "title": "The Last Detective",
+    "description": "In a city plagued by corruption, one detective stands against the tide. Following the trail of a mysterious murder, he uncovers a conspiracy that threatens to topple the power structures of the entire region.",
+    "releaseDate": "2022-11-05",
+    "genre": "Thriller",
+    "thumbnail": "/images/last-detective.jpg",
+    "duration": "1h 58m",
+    "rating": 4.5
+  },
+  {
+    "id": 3,
+    "title": "Whispers of the Heart",
+    "description": "A touching story of love, loss, and redemption as two strangers from different walks of life find connection in the most unexpected place. Their journey together heals wounds they didn't know they had.",
+    "releaseDate": "2022-08-20",
+    "genre": "Drama",
+    "thumbnail": "/images/whispers-heart.jpg",
+    "duration": "2h 12m",
+    "rating": 4.8
+  },
+  {
+    "id": 4,
+    "title": "Shadow Kingdom",
+    "description": "In a medieval fantasy world, rival kingdoms battle for supremacy while an ancient darkness stirs beneath them. A young warrior with mysterious powers may be the key to either salvation or destruction.",
+    "releaseDate": "2023-02-28",
+    "genre": "Fantasy",
+    "thumbnail": "/images/shadow-kingdom.jpg",
+    "duration": "2h 45m",
+    "rating": 4.6
+  },
+  {
+    "id": 5,
+    "title": "Laugh Factory",
+    "description": "A hilarious behind-the-scenes look at a struggling comedy club and the eclectic group of comedians trying to make it big. Their personal lives and professional aspirations collide in unexpected ways.",
+    "releaseDate": "2022-05-12",
+    "genre": "Comedy",
+    "thumbnail": "/images/laugh-factory.jpg",
+    "duration": "1h 45m",
+    "rating": 4.3
+  },
+  {
+    "id": 6,
+    "title": "The Artifact",
+    "description": "When an ancient artifact is unearthed in a remote archaeological dig, it unleashes a power that hasn't been seen for millennia. A team of researchers must race against time to prevent global catastrophe.",
+    "releaseDate": "2023-03-10",
+    "genre": "Action",
+    "thumbnail": "/images/the-artifact.jpg",
+    "duration": "2h 15m",
+    "rating": 4.4
+  },
+  {
+    "id": 7,
+    "title": "Ocean Depths",
+    "description": "A breathtaking documentary exploring the mysteries of our planet's deepest oceans. Discover creatures and ecosystems that exist in the most extreme environments on Earth.",
+    "releaseDate": "2022-09-08",
+    "genre": "Documentary",
+    "thumbnail": "/images/ocean-depths.jpg",
+    "duration": "1h 52m",
+    "rating": 4.9
+  },
+  {
+    "id": 8,
+    "title": "Neon Streets",
+    "description": "In a cyberpunk future where corporations rule and technology has advanced beyond control, a street-smart hacker stumbles upon information that could bring down the entire system.",
+    "releaseDate": "2023-01-30",
+    "genre": "Sci-Fi",
+    "thumbnail": "/images/neon-streets.jpg",
+    "duration": "2h 05m",
+    "rating": 4.5
+  },
+  {
+    "id": 9,
+    "title": "Family Matters",
+    "description": "A heartwarming comedy about a dysfunctional family trying to come together during the holidays. Their differences lead to hilarious situations, but ultimately remind them of what truly matters.",
+    "releaseDate": "2022-12-15",
+    "genre": "Comedy",
+    "thumbnail": "/images/family-matters.jpg",
+    "duration": "1h 48m",
+    "rating": 4.2
+  },
+  {
+    "id": 10,
+    "title": "The Summit",
+    "description": "An inspiring true story of a team of climbers who attempted to conquer the world's most dangerous mountain peak. Their journey tests the limits of human endurance and the power of the human spirit.",
+    "releaseDate": "2022-07-22",
+    "genre": "Adventure",
+    "thumbnail": "/images/the-summit.jpg",
+    "duration": "2h 10m",
+    "rating": 4.7
+  },
+  {
+    "id": 11,
+    "title": "Yesterday's Promise",
+    "description": "A poignant romance spanning decades, as two lovers separated by circumstance and war find their way back to each other. Their story unfolds against the backdrop of major historical events.",
+    "releaseDate": "2022-06-18",
+    "genre": "Drama",
+    "thumbnail": "/images/yesterdays-promise.jpg",
+    "duration": "2h 30m",
+    "rating": 4.8
+  },
+  {
+    "id": 12,
+    "title": "Night Patrol",
+    "description": "An elite police unit works the dangerous night shift in a crime-ridden city. As they battle external threats, internal conflicts and corruption within the force threaten to tear them apart.",
+    "releaseDate": "2023-02-05",
+    "genre": "Action",
+    "thumbnail": "/images/night-patrol.jpg",
+    "duration": "1h 55m",
+    "rating": 4.4
+  },
+  {
+    "id": 13,
+    "title": "Quantum Paradox",
+    "description": "A brilliant physicist discovers a way to manipulate time but finds himself caught in a dangerous web of paradoxes. His discoveries could revolutionize humanity or lead to its destruction.",
+    "releaseDate": "2023-04-02",
+    "genre": "Sci-Fi",
+    "thumbnail": "/images/quantum-paradox.jpg",
+    "duration": "2h 20m",
+    "rating": 4.6
+  },
+  {
+    "id": 14,
+    "title": "Wild Earth",
+    "description": "An awe-inspiring documentary showcasing the planet's most spectacular wildlife and natural wonders. Filmed over five years across seven continents, it offers unprecedented views of nature's beauty.",
+    "releaseDate": "2022-10-14",
+    "genre": "Documentary",
+    "thumbnail": "/images/wild-earth.jpg",
+    "duration": "2h 05m",
+    "rating": 4.9
+  },
+  {
+    "id": 15,
+    "title": "The Inheritance",
+    "description": "When a wealthy patriarch passes away, his estranged children gather for the reading of his will. What follows is a twisted tale of family secrets, betrayal, and unexpected alliances.",
+    "releaseDate": "2022-11-30",
+    "genre": "Mystery",
+    "thumbnail": "/images/the-inheritance.jpg",
+    "duration": "2h 15m",
+    "rating": 4.5
+  },
+  {
+    "id": 16,
+    "title": "Dancing Through Life",
+    "description": "A talented but struggling dancer gets the opportunity of a lifetime to join a prestigious dance company. Her journey explores the passion, pain, and beauty of pursuing artistic dreams.",
+    "releaseDate": "2022-08-05",
+    "genre": "Drama",
+    "thumbnail": "/images/dancing-life.jpg",
+    "duration": "2h 00m",
+    "rating": 4.7
+  }
+] 
