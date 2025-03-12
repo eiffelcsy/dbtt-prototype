@@ -1,9 +1,7 @@
 <template>
-  <div class="app bg-gray-900 min-h-screen text-white">
+  <div class="app">
     <Header />
-    <div class="main-content">
-      <NuxtPage />
-    </div>
+    <NuxtPage />
     <Footer />
   </div>
 </template>
@@ -14,50 +12,66 @@ import Footer from '~/components/Footer.vue';
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-}
-
-:root {
-  --primary: #EF4444;
-  --dark-bg: #111827;
-  --dark-surface: #1F2937;
-  --text: #F9FAFB;
-  --text-secondary: #D1D5DB;
-}
-
-body {
-  background-color: var(--dark-bg);
-  color: var(--text);
-}
-
-.main-content {
-  min-height: calc(100vh - 300px); /* Adjust based on header/footer height */
-}
-
-/* For smoother scrolling */
-html {
+  font-family: 'Inter', sans-serif;
+  background-color: #111827; /* bg-gray-900 */
+  color: white;
   scroll-behavior: smooth;
 }
 
-/* Hide scrollbar but still allow scrolling */
+/* Global transitions */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1F2937;
+  background: #1f2937; /* bg-gray-800 */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4B5563;
+  background: #4b5563; /* bg-gray-600 */
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6B7280;
+  background: #6b7280; /* bg-gray-500 */
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid #ef4444; /* red-600 */
+  outline-offset: 2px;
+}
+
+/* Button hover effects */
+.btn-hover-effect {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-hover-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 </style>

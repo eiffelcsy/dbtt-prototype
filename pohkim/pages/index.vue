@@ -1,33 +1,251 @@
 <template>
-  <div class="home min-h-screen bg-gray-900 text-white">
-    <section class="hero bg-cover bg-center h-96 flex items-center justify-center text-white">
-      <div class="hero-bg absolute inset-0 bg-[url('/images/hero-bg.jpg')] filter brightness-50"></div>
-      <div class="text-center relative z-10">
-        <h1 class="text-4xl font-bold mb-2">Welcome to Pohkim Streaming</h1>
-        <p class="text-lg mb-6">Transition from DVD to Digital Streaming</p>
-        <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-md transition-colors duration-300">
-          Start Watching
-        </button>
+  <div class="home-page min-h-screen bg-gray-900 text-white">
+    <!-- Hero Section -->
+    <div class="relative">
+      <!-- Hero Background -->
+      <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent z-10"></div>
+      <div class="h-[70vh] bg-gradient-to-br from-gray-800 to-gray-900 flex items-center">
+        <div class="container mx-auto px-4 relative z-20">
+          <div class="max-w-2xl">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Welcome to Pohkim</h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8">Your ultimate destination for movies and shows. Stream online or own your favorites on DVD.</p>
+            <div class="flex flex-wrap gap-4">
+              <NuxtLink to="/movies" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                Start Streaming
+              </NuxtLink>
+              <NuxtLink to="/store" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                Browse DVD Store
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Content Section -->
+    <section class="py-12 bg-gray-900">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8">Featured Content</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Featured Stream -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="aspect-video bg-gradient-to-br from-red-900 to-gray-900 relative">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-6xl font-bold text-white opacity-30">CO</span>
+              </div>
+              <div class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                FEATURED
+              </div>
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                <h3 class="text-2xl font-bold mb-2">Cosmic Odyssey</h3>
+                <div class="flex items-center text-sm text-gray-300 mb-2">
+                  <span>2023</span>
+                  <span class="mx-2">•</span>
+                  <span>Sci-Fi & Fantasy</span>
+                  <span class="mx-2">•</span>
+                  <span>142 min</span>
+                </div>
+                <div class="flex">
+                  <span class="text-yellow-400">★★★★★</span>
+                  <span class="ml-1 text-sm">4.8/5</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-300 mb-4">A mind-bending journey through space and time that challenges our understanding of reality. Follow astronaut Dr. Maya Chen as she discovers a mysterious anomaly that leads to parallel universes.</p>
+              <div class="flex gap-3">
+                <NuxtLink to="/video/1" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                  Watch Now
+                </NuxtLink>
+                <NuxtLink to="/product/1" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                  Buy DVD
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Featured DVD -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="aspect-video bg-gradient-to-br from-blue-900 to-gray-900 relative">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-6xl font-bold text-white opacity-30">DK</span>
+              </div>
+              <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
+                NEW RELEASE
+              </div>
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                <h3 class="text-2xl font-bold mb-2">Dragon Kingdom</h3>
+                <div class="flex items-center text-sm text-gray-300 mb-2">
+                  <span>2023</span>
+                  <span class="mx-2">•</span>
+                  <span>Sci-Fi & Fantasy</span>
+                  <span class="mx-2">•</span>
+                  <span>155 min</span>
+                </div>
+                <div class="flex">
+                  <span class="text-yellow-400">★★★★★</span>
+                  <span class="ml-1 text-sm">4.7/5</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-300 mb-4">In a magical realm where dragons and humans once lived in harmony, a young dragon rider must unite the divided kingdoms to face an ancient evil that threatens all life.</p>
+              <div class="flex gap-3">
+                <NuxtLink to="/video/13" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                  Watch Trailer
+                </NuxtLink>
+                <NuxtLink to="/product/13" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                  Buy DVD
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-    <section class="trending p-8">
-      <h2 class="text-2xl font-semibold mb-4">Trending Videos</h2>
-      <div class="trending-videos flex space-x-4 overflow-x-auto pb-4">
-        <VideoCard 
-          v-for="video in trendingVideos" 
-          :key="video.id" 
-          :video="video" 
-          class="flex-shrink-0 w-64"
-        />
+
+    <!-- Streaming Section -->
+    <section class="py-12 bg-gray-800">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold">Trending Now</h2>
+          <NuxtLink to="/movies" class="text-red-500 hover:text-red-400 font-semibold">
+            View All
+          </NuxtLink>
+        </div>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div v-for="i in 5" :key="i" class="group">
+            <div class="aspect-[2/3] bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg overflow-hidden relative">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-4xl font-bold text-white opacity-30">{{ ['CO', 'MS', 'LP', 'LH', 'QL'][i-1] }}</span>
+              </div>
+              <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
+                <NuxtLink :to="`/video/${i}`" class="bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </NuxtLink>
+              </div>
+            </div>
+            <h3 class="mt-2 font-semibold">{{ ['Cosmic Odyssey', 'Midnight Shadows', 'Love in Paris', 'The Last Heist', 'Quantum Leap'][i-1] }}</h3>
+          </div>
+        </div>
       </div>
     </section>
-    <section class="categories p-8">
-      <h2 class="text-2xl font-semibold mb-4">Categories</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div v-for="category in categories" :key="category.id" 
-             class="category bg-gray-800 rounded-lg p-4 hover:bg-gray-700 transition-colors duration-300 cursor-pointer">
-          <h3 class="text-xl font-semibold mb-2">{{ category.name }}</h3>
-          <p class="text-gray-400 text-sm">{{ category.videoCount }} videos</p>
+
+    <!-- DVD Store Section -->
+    <section class="py-12 bg-gray-900">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold">New DVD Releases</h2>
+          <NuxtLink to="/store" class="text-red-500 hover:text-red-400 font-semibold">
+            Shop All DVDs
+          </NuxtLink>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div v-for="i in 4" :key="i" class="bg-gray-800 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <NuxtLink :to="`/product/${i+10}`">
+              <div class="aspect-[3/4] relative bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
+                <span class="text-4xl font-bold text-white opacity-30">{{ ['DK', 'TH', 'SC', 'SD'][i-1] }}</span>
+                
+                <!-- Format Badge -->
+                <div class="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                  {{ ['4K Ultra HD', 'Blu-ray', 'DVD', '4K Ultra HD'][i-1] }}
+                </div>
+              </div>
+              
+              <div class="p-4">
+                <h3 class="font-bold text-lg mb-1 hover:text-red-500 transition-colors">{{ ['Dragon Kingdom', 'The Haunting', 'Second Chances', 'Speed Demons'][i-1] }}</h3>
+                <p class="text-gray-400 text-sm mb-2">{{ ['Guillermo del Toro', 'Mike Flanagan', 'Richard Linklater', 'Justin Lin'][i-1] }}</p>
+                <div class="flex justify-between items-center">
+                  <span class="font-bold">${{ [29.99, 24.99, 19.99, 29.99][i-1] }}</span>
+                  <div class="flex">
+                    <span class="text-yellow-400">★★★★</span><span class="text-gray-600">★</span>
+                  </div>
+                </div>
+              </div>
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="py-12 bg-gray-800">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold">Community Discussions</h2>
+          <NuxtLink to="/forum" class="text-red-500 hover:text-red-400 font-semibold">
+            Join the Community
+          </NuxtLink>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div v-for="i in 3" :key="i" class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 hover:border-gray-600 transition-colors duration-300">
+            <div class="p-6">
+              <div class="flex items-start mb-4">
+                <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center mr-3">
+                  <span class="text-sm font-bold">{{ ['S', 'F', 'B'][i-1] }}</span>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-lg hover:text-red-500 transition-colors">
+                    <NuxtLink :to="`/forum/topic/${100+i}`">
+                      {{ [
+                        'What did everyone think of the Cosmic Odyssey ending?',
+                        'Top 5 sci-fi movies of the last decade - what are yours?',
+                        'Fantasy series with the best world-building?'
+                      ][i-1] }}
+                    </NuxtLink>
+                  </h3>
+                  <div class="flex items-center text-sm text-gray-400 mt-1">
+                    <span>{{ ['SpaceExplorer42', 'FilmBuff2023', 'BookWorm'][i-1] }}</span>
+                    <span class="mx-2">•</span>
+                    <span>{{ ['2 hours ago', '1 day ago', '5 days ago'][i-1] }}</span>
+                    <span class="mx-2">•</span>
+                    <span>{{ ['24 replies', '37 replies', '42 replies'][i-1] }}</span>
+                  </div>
+                </div>
+              </div>
+              <p class="text-gray-400 text-sm line-clamp-2">
+                {{ [
+                  'I just finished watching Cosmic Odyssey and that twist at the end completely blew my mind! The way they revealed that the entire journey was actually happening in a parallel universe was so unexpected.',
+                  'I\'ve been thinking about my favorite sci-fi films from the past decade and wanted to share my top 5. What are yours? I\'m always looking for great recommendations!',
+                  'I\'m a huge fan of fantasy worlds with deep lore and history. Which series do you think has the most immersive and well-developed world-building?'
+                ][i-1] }}
+              </p>
+            </div>
+            <div class="px-6 py-3 bg-gray-800 flex justify-between items-center">
+              <div class="flex items-center text-sm text-gray-400">
+                <span>Category: </span>
+                <NuxtLink to="/forum/category/3" class="ml-1 text-red-500 hover:text-red-400">
+                  Sci-Fi & Fantasy
+                </NuxtLink>
+              </div>
+              <NuxtLink :to="`/forum/topic/${100+i}`" class="text-sm text-white hover:text-red-500">
+                Join Discussion →
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Subscription Banner -->
+    <section class="py-16 bg-gradient-to-r from-red-900 to-gray-900">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Get the Best of Both Worlds</h2>
+        <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">Subscribe to our streaming service and get 15% off all DVD purchases. Start your free trial today!</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <button class="bg-white text-red-900 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition-colors duration-300">
+            Start Free Trial
+          </button>
+          <NuxtLink to="/about" class="bg-transparent border-2 border-white text-white hover:bg-white hover:bg-opacity-10 font-bold py-3 px-8 rounded-lg transition-colors duration-300">
+            Learn More
+          </NuxtLink>
         </div>
       </div>
     </section>
@@ -35,58 +253,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import VideoCard from '~/components/VideoCard.vue';
-
-const trendingVideos = ref([]);
-const categories = ref([
-  { id: 1, name: 'Action', videoCount: 42 },
-  { id: 2, name: 'Drama', videoCount: 38 },
-  { id: 3, name: 'Comedy', videoCount: 31 },
-  { id: 4, name: 'Sci-Fi', videoCount: 27 },
-  { id: 5, name: 'Horror', videoCount: 18 },
-  { id: 6, name: 'Documentary', videoCount: 23 },
-  { id: 7, name: 'Animation', videoCount: 19 },
-  { id: 8, name: 'Thriller', videoCount: 25 }
-]);
-
-onMounted(async () => {
-  try {
-    const response = await fetch('/videos.json');
-    const allVideos = await response.json();
-    trendingVideos.value = allVideos.slice(0, 6); // Display first 6 videos as trending
-  } catch (error) {
-    console.error('Error loading trending videos:', error);
-  }
-});
+// You can add any necessary script logic here
 </script>
 
 <style scoped>
-.hero {
-  position: relative;
-}
-.hero-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-.trending-videos::-webkit-scrollbar {
-  height: 8px;
-}
-.trending-videos::-webkit-scrollbar-track {
-  background: #1f2937;
-  border-radius: 4px;
-}
-.trending-videos::-webkit-scrollbar-thumb {
-  background: #4b5563;
-  border-radius: 4px;
-}
-.trending-videos::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
