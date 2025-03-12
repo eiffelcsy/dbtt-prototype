@@ -2,19 +2,21 @@
   <div class="home-page min-h-screen bg-gray-900 text-white">
     <!-- Hero Section -->
     <div class="relative">
-      <!-- Hero Background -->
-      <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent z-10"></div>
-      <div class="h-[70vh] bg-gradient-to-br from-gray-800 to-gray-900 flex items-center">
+      <div class="absolute inset-0 z-0">
+        <img src="/images/hero.jpg" alt="Hero Background" class="w-full h-full object-cover">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-80 z-10"></div>
+      <div class="h-[70vh] flex items-center">
         <div class="container mx-auto px-4 relative z-20">
           <div class="max-w-2xl">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Welcome to Pohkim</h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-8">Your ultimate destination for movies and shows. Stream online or own your favorites on DVD.</p>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8">Your ultimate destination for premium DVD collections with exclusive trailers and a vibrant community.</p>
             <div class="flex flex-wrap gap-4">
-              <NuxtLink to="/movies" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
-                Start Streaming
-              </NuxtLink>
-              <NuxtLink to="/store" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+              <NuxtLink to="/store" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
                 Browse DVD Store
+              </NuxtLink>
+              <NuxtLink to="/forum" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                Join Community
               </NuxtLink>
             </div>
           </div>
@@ -25,10 +27,10 @@
     <!-- Featured Content Section -->
     <section class="py-12 bg-gray-900">
       <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold mb-8">Featured Content</h2>
+        <h2 class="text-3xl font-bold mb-8">Featured DVDs</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Featured Stream -->
+          <!-- Featured DVD 1 -->
           <div class="bg-gray-800 rounded-lg overflow-hidden">
             <div class="aspect-video bg-gradient-to-br from-red-900 to-gray-900 relative">
               <div class="absolute inset-0 flex items-center justify-center">
@@ -55,9 +57,9 @@
             <div class="p-6">
               <p class="text-gray-300 mb-4">A mind-bending journey through space and time that challenges our understanding of reality. Follow astronaut Dr. Maya Chen as she discovers a mysterious anomaly that leads to parallel universes.</p>
               <div class="flex gap-3">
-                <NuxtLink to="/video/1" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                  Watch Now
-                </NuxtLink>
+                <button @click="showTrailer(1)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                  Watch Trailer
+                </button>
                 <NuxtLink to="/product/1" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                   Buy DVD
                 </NuxtLink>
@@ -65,7 +67,7 @@
             </div>
           </div>
           
-          <!-- Featured DVD -->
+          <!-- Featured DVD 2 -->
           <div class="bg-gray-800 rounded-lg overflow-hidden">
             <div class="aspect-video bg-gradient-to-br from-blue-900 to-gray-900 relative">
               <div class="absolute inset-0 flex items-center justify-center">
@@ -92,45 +94,14 @@
             <div class="p-6">
               <p class="text-gray-300 mb-4">In a magical realm where dragons and humans once lived in harmony, a young dragon rider must unite the divided kingdoms to face an ancient evil that threatens all life.</p>
               <div class="flex gap-3">
-                <NuxtLink to="/video/13" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                <button @click="showTrailer(13)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                   Watch Trailer
-                </NuxtLink>
+                </button>
                 <NuxtLink to="/product/13" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                   Buy DVD
                 </NuxtLink>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Streaming Section -->
-    <section class="py-12 bg-gray-800">
-      <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center mb-8">
-          <h2 class="text-3xl font-bold">Trending Now</h2>
-          <NuxtLink to="/movies" class="text-red-500 hover:text-red-400 font-semibold">
-            View All
-          </NuxtLink>
-        </div>
-        
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          <div v-for="i in 5" :key="i" class="group">
-            <div class="aspect-[2/3] bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg overflow-hidden relative">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <span class="text-4xl font-bold text-white opacity-30">{{ ['CO', 'MS', 'LP', 'LH', 'QL'][i-1] }}</span>
-              </div>
-              <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
-                <NuxtLink :to="`/video/${i}`" class="bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </NuxtLink>
-              </div>
-            </div>
-            <h3 class="mt-2 font-semibold">{{ ['Cosmic Odyssey', 'Midnight Shadows', 'Love in Paris', 'The Last Heist', 'Quantum Leap'][i-1] }}</h3>
           </div>
         </div>
       </div>
@@ -234,26 +205,32 @@
       </div>
     </section>
 
-    <!-- Subscription Banner -->
-    <section class="py-16 bg-gradient-to-r from-red-900 to-gray-900">
-      <div class="container mx-auto px-4 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Get the Best of Both Worlds</h2>
-        <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">Subscribe to our streaming service and get 15% off all DVD purchases. Start your free trial today!</p>
-        <div class="flex flex-wrap justify-center gap-4">
-          <button class="bg-white text-red-900 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition-colors duration-300">
-            Start Free Trial
-          </button>
-          <NuxtLink to="/about" class="bg-transparent border-2 border-white text-white hover:bg-white hover:bg-opacity-10 font-bold py-3 px-8 rounded-lg transition-colors duration-300">
-            Learn More
-          </NuxtLink>
+    <!-- Trailer Modal -->
+    <div v-if="trailerModalOpen" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+      <div class="relative w-full max-w-4xl">
+        <button @click="trailerModalOpen = false" class="absolute -top-10 right-0 text-white hover:text-gray-300">
+          Close ✕
+        </button>
+        <div class="bg-black aspect-video flex items-center justify-center">
+          <p class="text-center text-gray-400">
+            This is a prototype. Trailer playback for product #{{ currentTrailerId }} would be implemented here in the production version.
+          </p>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
 <script setup>
-// You can add any necessary script logic here
+import { ref } from 'vue';
+
+const trailerModalOpen = ref(false);
+const currentTrailerId = ref(null);
+
+function showTrailer(id) {
+  currentTrailerId.value = id;
+  trailerModalOpen.value = true;
+}
 </script>
 
 <style scoped>

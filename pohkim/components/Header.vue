@@ -8,7 +8,6 @@
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex space-x-6">
           <NuxtLink to="/" class="nav-link">Home</NuxtLink>
-          <NuxtLink to="/movies" class="nav-link">Browse</NuxtLink>
           <NuxtLink to="/store" class="nav-link">DVD Store</NuxtLink>
           <NuxtLink to="/forum" class="nav-link">Community</NuxtLink>
           <NuxtLink to="/about" class="nav-link">About</NuxtLink>
@@ -63,7 +62,6 @@
       <div v-if="mobileMenuOpen" class="md:hidden py-4 border-t border-gray-800">
         <div class="flex flex-col space-y-4">
           <NuxtLink to="/" class="nav-link block" @click="mobileMenuOpen = false">Home</NuxtLink>
-          <NuxtLink to="/movies" class="nav-link block" @click="mobileMenuOpen = false">Browse</NuxtLink>
           <NuxtLink to="/store" class="nav-link block" @click="mobileMenuOpen = false">DVD Store</NuxtLink>
           <NuxtLink to="/forum" class="nav-link block" @click="mobileMenuOpen = false">Community</NuxtLink>
           <NuxtLink to="/about" class="nav-link block" @click="mobileMenuOpen = false">About</NuxtLink>

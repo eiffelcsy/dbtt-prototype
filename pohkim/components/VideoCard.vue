@@ -4,7 +4,7 @@
     @mouseenter="isHovered = true" 
     @mouseleave="isHovered = false"
   >
-    <NuxtLink :to="`/video/${video.id}`" class="block">
+    <NuxtLink :to="`/product/${video.productId}`" class="block">
       <div class="relative">
         <div 
           class="w-full h-40 bg-gradient-to-r from-gray-700 to-gray-600 flex items-center justify-center"
@@ -24,7 +24,7 @@
         >
           <div class="text-center">
             <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-full mb-2">
-              Play
+              Watch Trailer
             </button>
           </div>
         </div>
