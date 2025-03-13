@@ -76,12 +76,19 @@ import { ref, computed } from 'vue';
 
 const mobileMenuOpen = ref(false);
 
-// This would typically come from a store in a real application
-const cartItemCount = ref(0);
+// Get cart count from props
+const props = defineProps({
+  cartCount: {
+    type: Number,
+    default: 0
+  }
+});
+
+const cartItemCount = computed(() => props.cartCount);
 
 // Function to update cart count (for demo purposes)
 function updateCartCount(count) {
-  cartItemCount.value = count;
+  // This function is no longer used as the cart count is now reactive
 }
 
 // Expose the function to be used by other components

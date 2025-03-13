@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <Header />
+    <Header :cart-count="cartCount" />
     <NuxtPage />
     <Footer />
     <ProductOverlay 
@@ -25,6 +25,11 @@ const selectedProduct = computed(() => productStore.selectedProduct.value);
 
 // Cart functionality
 const cart = ref([]);
+const cartCount = ref(0);
+
+function updateCartCount() {
+  cartCount.value = cart.value.reduce((total, item) => total + item.quantity, 0);
+}
 
 function closeProductOverlay() {
   productStore.closeProductOverlay();
@@ -46,11 +51,8 @@ function addToCart(product) {
   // Save cart to localStorage
   localStorage.setItem('cart', JSON.stringify(cart.value));
   
-  // Update cart count in header
-  const headerComponent = document.querySelector('header').__vueParentComponent.exposed;
-  if (headerComponent && headerComponent.updateCartCount) {
-    headerComponent.updateCartCount(cart.value.reduce((total, item) => total + item.quantity, 0));
-  }
+  // Update cart count
+  updateCartCount();
   
   // Show notification (you might want to implement this)
   console.log('Added to cart:', product.title);
@@ -61,12 +63,7 @@ onMounted(() => {
   const savedCart = localStorage.getItem('cart');
   if (savedCart) {
     cart.value = JSON.parse(savedCart);
-    
-    // Update cart count in header
-    const headerComponent = document.querySelector('header').__vueParentComponent.exposed;
-    if (headerComponent && headerComponent.updateCartCount) {
-      headerComponent.updateCartCount(cart.value.reduce((total, item) => total + item.quantity, 0));
-    }
+    updateCartCount();
   }
 });
 </script>
