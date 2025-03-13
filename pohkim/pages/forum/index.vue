@@ -2,10 +2,10 @@
   <div class="forum min-h-screen bg-gray-900 text-white p-8">
     <div class="mb-8">
       <h1 class="text-3xl font-bold mb-2">Pohkim Community</h1>
-      <p class="text-gray-400">Join discussions about your favorite shows and movies with fellow enthusiasts.</p>
+      <p class="text-gray-400">Join discussions about your favorite films with fellow enthusiasts.</p>
     </div>
     
-    <!-- Forum Stats -->
+    <!-- Community Stats -->
     <div class="bg-gray-800 rounded-lg p-6 mb-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
         <div>
@@ -27,7 +27,7 @@
       </div>
     </div>
     
-    <!-- Forum Categories -->
+    <!-- Community Categories -->
     <div class="mb-12">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-semibold">Categories</h2>

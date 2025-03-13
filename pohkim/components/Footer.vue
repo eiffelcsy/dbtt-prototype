@@ -7,7 +7,7 @@
         <div>
           <h3 class="text-xl font-bold mb-4">POHKIM</h3>
           <p class="text-gray-400 mb-4">
-            Your ultimate destination for movies and shows. Stream online or own your favorites on DVD.
+            Your ultimate destination for movies and shows. Own your favorites on DVD, join our vibrant community and share your collection.
           </p>
           <div class="flex space-x-4">
             <a href="#" class="text-gray-400 hover:text-white transition-colors">
@@ -38,7 +38,6 @@
           <h3 class="text-lg font-semibold mb-4">Navigation</h3>
           <ul class="space-y-2">
             <li><NuxtLink to="/" class="text-gray-400 hover:text-white transition-colors">Home</NuxtLink></li>
-            <li><NuxtLink to="/movies" class="text-gray-400 hover:text-white transition-colors">Browse</NuxtLink></li>
             <li><NuxtLink to="/store" class="text-gray-400 hover:text-white transition-colors">DVD Store</NuxtLink></li>
             <li><NuxtLink to="/forum" class="text-gray-400 hover:text-white transition-colors">Community</NuxtLink></li>
             <li><NuxtLink to="/about" class="text-gray-400 hover:text-white transition-colors">About Us</NuxtLink></li>

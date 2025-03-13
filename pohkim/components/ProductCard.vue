@@ -3,6 +3,7 @@
     class="product-card bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
     @mouseenter="isHovered = true" 
     @mouseleave="isHovered = false"
+    @click="openOverlay"
   >
     <div class="relative">
       <div 
@@ -22,9 +23,9 @@
         class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center transition-opacity duration-300"
       >
         <div class="text-center space-y-2">
-          <NuxtLink :to="`/video/${product.id}`" class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-full">
-            View Trailer
-          </NuxtLink>
+          <button class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-full">
+            View Details
+          </button>
         </div>
       </div>
       <div class="absolute top-0 right-0 bg-red-600 px-2 py-1 text-xs font-bold">
@@ -43,7 +44,7 @@
           <span v-if="!product.inStock" class="ml-2 text-red-500 text-xs">Out of Stock</span>
         </div>
         <button 
-          @click="addToCart"
+          @click.stop="addToCart"
           :disabled="!product.inStock"
           :class="[
             'bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-full text-sm',
@@ -67,7 +68,7 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['add-to-cart']);
+const emit = defineEmits(['add-to-cart', 'open-overlay']);
 
 const isHovered = ref(false);
 
@@ -81,6 +82,10 @@ function addToCart() {
   if (props.product.inStock) {
     emit('add-to-cart', props.product);
   }
+}
+
+function openOverlay() {
+  emit('open-overlay', props.product);
 }
 </script>
 

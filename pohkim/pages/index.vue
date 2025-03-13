@@ -9,7 +9,7 @@
       <div class="h-[70vh] flex items-center">
         <div class="container mx-auto px-4 relative z-20">
           <div class="max-w-2xl">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Welcome to Pohkim</h1>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Welcome to Poh Kim</h1>
             <p class="text-xl md:text-2xl text-gray-300 mb-8">Your ultimate destination for premium DVD collections with exclusive trailers and a vibrant community.</p>
             <div class="flex flex-wrap gap-4">
               <NuxtLink to="/store" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
@@ -60,9 +60,9 @@
                 <button @click="showTrailer(1)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                   Watch Trailer
                 </button>
-                <NuxtLink to="/product/1" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                <button @click="openProductOverlay(1)" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                   Buy DVD
-                </NuxtLink>
+                </button>
               </div>
             </div>
           </div>
@@ -97,9 +97,9 @@
                 <button @click="showTrailer(13)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                   Watch Trailer
                 </button>
-                <NuxtLink to="/product/13" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                <button @click="openProductOverlay(13)" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                   Buy DVD
-                </NuxtLink>
+                </button>
               </div>
             </div>
           </div>
@@ -118,28 +118,26 @@
         </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <div v-for="i in 4" :key="i" class="bg-gray-800 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <NuxtLink :to="`/product/${i+10}`">
-              <div class="aspect-[3/4] relative bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
-                <span class="text-4xl font-bold text-white opacity-30">{{ ['DK', 'TH', 'SC', 'SD'][i-1] }}</span>
-                
-                <!-- Format Badge -->
-                <div class="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                  {{ ['4K Ultra HD', 'Blu-ray', 'DVD', '4K Ultra HD'][i-1] }}
-                </div>
-              </div>
+          <div v-for="i in 4" :key="i" class="bg-gray-800 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer" @click="openNewReleaseOverlay(i)">
+            <div class="aspect-[3/4] relative bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
+              <span class="text-4xl font-bold text-white opacity-30">{{ ['DK', 'TH', 'SC', 'SD'][i-1] }}</span>
               
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1 hover:text-red-500 transition-colors">{{ ['Dragon Kingdom', 'The Haunting', 'Second Chances', 'Speed Demons'][i-1] }}</h3>
-                <p class="text-gray-400 text-sm mb-2">{{ ['Guillermo del Toro', 'Mike Flanagan', 'Richard Linklater', 'Justin Lin'][i-1] }}</p>
-                <div class="flex justify-between items-center">
-                  <span class="font-bold">${{ [29.99, 24.99, 19.99, 29.99][i-1] }}</span>
-                  <div class="flex">
-                    <span class="text-yellow-400">★★★★</span><span class="text-gray-600">★</span>
-                  </div>
+              <!-- Format Badge -->
+              <div class="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                {{ ['4K Ultra HD', 'Blu-ray', 'DVD', '4K Ultra HD'][i-1] }}
+              </div>
+            </div>
+            
+            <div class="p-4">
+              <h3 class="font-bold text-lg mb-1 hover:text-red-500 transition-colors">{{ ['Dragon Kingdom', 'The Haunting', 'Second Chances', 'Speed Demons'][i-1] }}</h3>
+              <p class="text-gray-400 text-sm mb-2">{{ ['Guillermo del Toro', 'Mike Flanagan', 'Richard Linklater', 'Justin Lin'][i-1] }}</p>
+              <div class="flex justify-between items-center">
+                <span class="font-bold">${{ [29.99, 24.99, 19.99, 29.99][i-1] }}</span>
+                <div class="flex">
+                  <span class="text-yellow-400">★★★★</span><span class="text-gray-600">★</span>
                 </div>
               </div>
-            </NuxtLink>
+            </div>
           </div>
         </div>
       </div>
@@ -206,9 +204,9 @@
     </section>
 
     <!-- Trailer Modal -->
-    <div v-if="trailerModalOpen" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+    <div v-if="showTrailerModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
       <div class="relative w-full max-w-4xl">
-        <button @click="trailerModalOpen = false" class="absolute -top-10 right-0 text-white hover:text-gray-300">
+        <button @click="closeTrailer" class="absolute -top-10 right-0 text-white hover:text-gray-300">
           Close ✕
         </button>
         <div class="bg-black aspect-video flex items-center justify-center">
@@ -222,14 +220,67 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useProductStore } from '~/composables/useProductStore';
 
-const trailerModalOpen = ref(false);
+const videos = ref([]);
+const loading = ref(true);
+const error = ref(null);
+const showTrailerModal = ref(false);
 const currentTrailerId = ref(null);
+const productStore = useProductStore();
 
+// Function to show trailer
 function showTrailer(id) {
   currentTrailerId.value = id;
-  trailerModalOpen.value = true;
+  showTrailerModal.value = true;
+}
+
+// Function to close trailer
+function closeTrailer() {
+  showTrailerModal.value = false;
+}
+
+// Function to open product overlay
+function openProductOverlay(productId) {
+  // Find the product in the videos array or fetch it
+  const product = {
+    id: productId,
+    title: productId === 1 ? "Quantum Nexus" : "Dragon Kingdom",
+    description: productId === 1 
+      ? "A mind-bending journey through space and time that challenges our understanding of reality. Follow astronaut Dr. Maya Chen as she discovers a mysterious anomaly that leads to parallel universes."
+      : "In a magical realm where dragons and humans once lived in harmony, a young dragon rider must unite the divided kingdoms to face an ancient evil that threatens all life.",
+    rating: productId === 1 ? 4.8 : 4.7,
+    releaseDate: "2023-05-15",
+    director: "Sarah Johnson",
+    genre: productId === 1 ? "Sci-Fi" : "Fantasy",
+    price: (Math.random() * 20 + 9.99).toFixed(2),
+    inStock: true,
+    format: "4K Ultra HD",
+  };
+  
+  productStore.openProductOverlay(product);
+}
+
+// Function to open product overlay for new releases
+function openNewReleaseOverlay(index) {
+  const titles = ['Dragon Kingdom', 'Time Hunters', 'Space Colony', 'Star Drifters'];
+  const genres = ['Fantasy', 'Sci-Fi', 'Adventure', 'Action'];
+  
+  const product = {
+    id: index + 10,
+    title: titles[index - 1],
+    description: `An exciting ${genres[index - 1].toLowerCase()} adventure that will keep you on the edge of your seat.`,
+    rating: 4.5 + (Math.random() * 0.5),
+    releaseDate: "2023-06-15",
+    director: "Michael Anderson",
+    genre: genres[index - 1],
+    price: (Math.random() * 20 + 9.99).toFixed(2),
+    inStock: true,
+    format: ['4K Ultra HD', 'Blu-ray', 'DVD', '4K Ultra HD'][index - 1],
+  };
+  
+  productStore.openProductOverlay(product);
 }
 </script>
 

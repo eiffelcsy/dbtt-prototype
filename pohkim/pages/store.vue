@@ -17,7 +17,7 @@
           <label class="block text-gray-400 text-sm mb-2">Sort By</label>
           <select v-model="sortBy" class="bg-gray-800 text-white rounded p-2 border border-gray-700 w-full md:w-48">
             <option value="title">Title</option>
-            <option value="price">Price</option>
+            <option value="price">Price (Ascending)</option>
             <option value="releaseDate">Release Date</option>
           </select>
         </div>
@@ -54,7 +54,13 @@
       </div>
       
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" @add-to-cart="addToCart" />
+        <ProductCard 
+          v-for="product in filteredProducts" 
+          :key="product.id" 
+          :product="product" 
+          @add-to-cart="addToCart"
+          @open-overlay="openProductOverlay" 
+        />
       </div>
     </div>
     
@@ -76,6 +82,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import ProductCard from '~/components/ProductCard.vue';
+import { useProductStore } from '~/composables/useProductStore';
 
 const products = ref([]);
 const loading = ref(true);
@@ -85,6 +92,7 @@ const selectedGenre = ref('');
 const sortBy = ref('title');
 const showCartNotification = ref(false);
 const cart = ref([]);
+const productStore = useProductStore();
 
 const genres = computed(() => {
   const genreSet = new Set(products.value.map(product => product.genre));
@@ -178,6 +186,10 @@ function addToCart(product) {
   setTimeout(() => {
     showCartNotification.value = false;
   }, 3000);
+}
+
+function openProductOverlay(product) {
+  productStore.openProductOverlay(product);
 }
 
 onMounted(() => {

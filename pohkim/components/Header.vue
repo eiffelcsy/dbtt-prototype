@@ -8,26 +8,13 @@
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex space-x-6">
           <NuxtLink to="/" class="nav-link">Home</NuxtLink>
-          <NuxtLink to="/store" class="nav-link">DVD Store</NuxtLink>
+          <NuxtLink to="/store" class="nav-link">Store</NuxtLink>
           <NuxtLink to="/forum" class="nav-link">Community</NuxtLink>
           <NuxtLink to="/about" class="nav-link">About</NuxtLink>
         </nav>
         
         <!-- Right Side - Search, User, and Cart -->
         <div class="flex items-center space-x-4">
-          <div class="hidden md:block">
-            <div class="relative">
-              <input 
-                type="text" 
-                placeholder="Search..." 
-                class="bg-gray-800 text-white rounded-full py-1 px-4 w-48 focus:outline-none focus:ring-1 focus:ring-red-600"
-              >
-              <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
-                🔍
-              </button>
-            </div>
-          </div>
-          
           <!-- Cart Icon -->
           <NuxtLink to="/cart" class="relative">
             <div class="text-white hover:text-red-500 transition-colors">

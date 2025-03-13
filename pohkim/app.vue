@@ -3,12 +3,72 @@
     <Header />
     <NuxtPage />
     <Footer />
+    <ProductOverlay 
+      v-if="selectedProduct" 
+      :is-open="!!selectedProduct" 
+      :product="selectedProduct" 
+      @close="closeProductOverlay" 
+      @add-to-cart="addToCart" 
+    />
   </div>
 </template>
 
 <script setup>
 import Header from '~/components/Header.vue';
 import Footer from '~/components/Footer.vue';
+import ProductOverlay from '~/components/ProductOverlay.vue';
+import { useProductStore } from '~/composables/useProductStore';
+import { ref, computed, onMounted } from 'vue';
+
+const productStore = useProductStore();
+const selectedProduct = computed(() => productStore.selectedProduct.value);
+
+// Cart functionality
+const cart = ref([]);
+
+function closeProductOverlay() {
+  productStore.closeProductOverlay();
+}
+
+function addToCart(product) {
+  // Check if product is already in cart
+  const existingItem = cart.value.find(item => item.id === product.id);
+  
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.value.push({
+      ...product,
+      quantity: 1
+    });
+  }
+  
+  // Save cart to localStorage
+  localStorage.setItem('cart', JSON.stringify(cart.value));
+  
+  // Update cart count in header
+  const headerComponent = document.querySelector('header').__vueParentComponent.exposed;
+  if (headerComponent && headerComponent.updateCartCount) {
+    headerComponent.updateCartCount(cart.value.reduce((total, item) => total + item.quantity, 0));
+  }
+  
+  // Show notification (you might want to implement this)
+  console.log('Added to cart:', product.title);
+}
+
+onMounted(() => {
+  // Load cart from localStorage
+  const savedCart = localStorage.getItem('cart');
+  if (savedCart) {
+    cart.value = JSON.parse(savedCart);
+    
+    // Update cart count in header
+    const headerComponent = document.querySelector('header').__vueParentComponent.exposed;
+    if (headerComponent && headerComponent.updateCartCount) {
+      headerComponent.updateCartCount(cart.value.reduce((total, item) => total + item.quantity, 0));
+    }
+  }
+});
 </script>
 
 <style>
