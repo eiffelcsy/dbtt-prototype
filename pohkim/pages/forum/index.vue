@@ -6,7 +6,10 @@
     </div>
     
     <!-- Community Stats -->
-    <div class="bg-gray-800 rounded-lg p-6 mb-8">
+    <div v-if="!forumStats" class="bg-gray-800 rounded-lg p-6 mb-8 flex justify-center">
+      <div class="loader"></div>
+    </div>
+    <div v-else class="bg-gray-800 rounded-lg p-6 mb-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
         <div>
           <p class="text-3xl font-bold text-red-500">{{ forumStats.topics }}</p>
@@ -28,7 +31,10 @@
     </div>
     
     <!-- Community Categories -->
-    <div class="mb-12">
+    <div v-if="categories.length === 0" class="mb-12 bg-gray-800 rounded-lg p-6 flex justify-center">
+      <div class="loader"></div>
+    </div>
+    <div v-else class="mb-12">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-semibold">Categories</h2>
         <div class="flex space-x-2">
@@ -62,7 +68,10 @@
     </div>
     
     <!-- Recent Discussions -->
-    <div>
+    <div v-if="loadingTopics" class="bg-gray-800 rounded-lg p-6 flex justify-center">
+      <div class="loader"></div>
+    </div>
+    <div v-else>
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-semibold">Recent Discussions</h2>
         <NuxtLink to="/forum/new-topic" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors duration-200">
@@ -72,8 +81,8 @@
       </div>
       
       <div class="bg-gray-800 rounded-lg overflow-hidden">
-        <div v-for="(topic, index) in recentTopics" :key="topic.id" 
-             :class="['p-6 flex flex-col md:flex-row md:items-center', index < recentTopics.length - 1 ? 'border-b border-gray-700' : '']">
+        <div v-for="(topic, index) in displayedTopics" :key="topic.id" 
+             :class="['p-6 flex flex-col md:flex-row md:items-center', index < displayedTopics.length - 1 ? 'border-b border-gray-700' : '']">
           <div class="flex-grow mb-4 md:mb-0">
             <div class="flex items-center mb-2">
               <div class="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center mr-2">
@@ -102,8 +111,17 @@
       </div>
       
       <div class="mt-6 text-center">
-        <button class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-md transition-colors duration-200">
-          Load More Discussions
+        <button 
+          @click="loadMoreTopics" 
+          class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-md transition-colors duration-200"
+          :disabled="loadingMore || noMoreTopics"
+          :class="{ 'opacity-50 cursor-not-allowed': noMoreTopics }"
+        >
+          <span v-if="loadingMore" class="inline-block align-middle mr-2">
+            <div class="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+          </span>
+          <span v-if="noMoreTopics">No More Discussions</span>
+          <span v-else>Load More Discussions</span>
         </button>
       </div>
     </div>
@@ -111,123 +129,88 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
-// Forum statistics
-const forumStats = ref({
-  topics: 1248,
-  posts: 5729,
-  members: 3421,
-  online: 42
+const forumStats = ref(null);
+const categories = ref([]);
+const allTopics = ref([]);
+const displayedTopics = ref([]);
+const currentPage = ref(1);
+const topicsPerPage = ref(10);
+const loadingTopics = ref(true);
+const loadingMore = ref(false);
+const noMoreTopics = computed(() => {
+  return displayedTopics.value.length >= allTopics.value.length;
 });
 
-// Forum categories
-const categories = ref([
-  {
-    id: 1,
-    name: 'Action & Adventure',
-    description: 'Discuss high-octane action films and adventure epics',
-    icon: '🔥',
-    topics: 324,
-    posts: 1892
-  },
-  {
-    id: 2,
-    name: 'Drama & Romance',
-    description: 'Share your thoughts on dramatic and romantic stories',
-    icon: '💔',
-    topics: 287,
-    posts: 1456
-  },
-  {
-    id: 3,
-    name: 'Sci-Fi & Fantasy',
-    description: 'Explore worlds beyond our own and magical realms',
-    icon: '🚀',
-    topics: 412,
-    posts: 2103
-  },
-  {
-    id: 4,
-    name: 'Horror & Thriller',
-    description: 'For fans of spine-tingling and suspenseful content',
-    icon: '👻',
-    topics: 198,
-    posts: 876
-  },
-  {
-    id: 5,
-    name: 'Comedy',
-    description: 'Laugh and discuss your favorite comedies',
-    icon: '😂',
-    topics: 231,
-    posts: 1204
-  },
-  {
-    id: 6,
-    name: 'Documentary & Educational',
-    description: 'Learn and discuss informative content',
-    icon: '🧠',
-    topics: 156,
-    posts: 723
-  }
-]);
+async function loadForumData() {
+  try {
+    loadingTopics.value = true;
+    
+    // Load forum stats
+    const statsResponse = await fetch('/forum-stats.json');
+    forumStats.value = await statsResponse.json();
 
-// Recent topics
-const recentTopics = ref([
-  {
-    id: 101,
-    title: 'What did everyone think of the Cosmic Odyssey ending?',
-    author: 'SpaceExplorer42',
-    date: '2 hours ago',
-    preview: 'I just finished watching and that twist at the end completely blew my mind! Did anyone else...',
-    replies: 24,
-    views: 142,
-    category: 3
-  },
-  {
-    id: 102,
-    title: 'The Last Detective - Plot holes discussion [SPOILERS]',
-    author: 'MysteryFan',
-    date: '5 hours ago',
-    preview: 'I noticed several inconsistencies in the storyline, especially when the detective visits the...',
-    replies: 18,
-    views: 97,
-    category: 4
-  },
-  {
-    id: 103,
-    title: 'Whispers of the Heart made me cry - emotional impact thread',
-    author: 'FilmBuff2023',
-    date: '1 day ago',
-    preview: 'I wasn\'t prepared for how emotional this film would be. The scene where the main characters...',
-    replies: 32,
-    views: 215,
-    category: 2
-  },
-  {
-    id: 104,
-    title: 'Laugh Factory - Funniest moments compilation',
-    author: 'ComedyLover',
-    date: '2 days ago',
-    preview: 'Let\'s compile a list of the absolute funniest moments from the show. My favorite has to be when...',
-    replies: 27,
-    views: 183,
-    category: 5
-  },
-  {
-    id: 105,
-    title: 'Ocean Depths documentary - Fascinating facts I learned',
-    author: 'OceanExplorer',
-    date: '3 days ago',
-    preview: 'This documentary was incredibly informative. I wanted to share some of the most interesting facts I learned...',
-    replies: 15,
-    views: 124,
-    category: 6
+    // Load categories
+    const categoriesResponse = await fetch('/forum-categories.json');
+    categories.value = await categoriesResponse.json();
+
+    // Load topics
+    const topicsResponse = await fetch('/forum-topics.json');
+    allTopics.value = await topicsResponse.json();
+    
+    // Get initial set of topics
+    displayedTopics.value = allTopics.value.slice(0, topicsPerPage.value);
+    
+    loadingTopics.value = false;
+  } catch (error) {
+    console.error('Error loading forum data:', error);
+    loadingTopics.value = false;
   }
-]);
+}
+
+async function loadMoreTopics() {
+  if (loadingMore.value || noMoreTopics.value) return;
+  
+  try {
+    loadingMore.value = true;
+    
+    // Simulate network delay for loading animation
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Calculate next page of topics
+    currentPage.value++;
+    const startIndex = (currentPage.value - 1) * topicsPerPage.value;
+    const endIndex = startIndex + topicsPerPage.value;
+    const nextPageTopics = allTopics.value.slice(startIndex, endIndex);
+    
+    // Add new topics to displayed topics
+    displayedTopics.value = [...displayedTopics.value, ...nextPageTopics];
+    
+    loadingMore.value = false;
+  } catch (error) {
+    console.error('Error loading more topics:', error);
+    loadingMore.value = false;
+  }
+}
+
+onMounted(() => {
+  loadForumData();
+});
 </script>
 
 <style scoped>
-/* Additional styling can be added here if needed */
+.loader {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #fff;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style> 

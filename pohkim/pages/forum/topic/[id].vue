@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <template v-else>
+    <template v-else-if="topic">
       <!-- Breadcrumb -->
       <div class="flex items-center mb-6 text-sm">
         <NuxtLink to="/forum" class="text-gray-400 hover:text-white">Community</NuxtLink>
@@ -55,7 +55,7 @@
       <!-- Replies -->
       <div class="mb-6">
         <h2 class="text-xl font-bold mb-4">Replies ({{ topic.replies }})</h2>
-        <div class="space-y-4">
+        <div v-if="replies.length > 0" class="space-y-4">
           <div v-for="reply in replies" :key="reply.id" class="bg-gray-800 rounded-lg p-6">
             <div class="flex items-center mb-4">
               <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center mr-2">
@@ -70,6 +70,9 @@
               {{ reply.content }}
             </div>
           </div>
+        </div>
+        <div v-else class="bg-gray-800 rounded-lg p-6 text-center">
+          <p class="text-gray-400">No replies yet. Be the first to reply!</p>
         </div>
       </div>
 
@@ -107,112 +110,38 @@ const error = ref(null);
 const topic = ref(null);
 const replies = ref([]);
 const newReply = ref('');
-
-// Mock data for categories (in a real app, this would come from a store or API)
-const categories = {
-  1: 'Action & Adventure',
-  2: 'Drama & Romance',
-  3: 'Sci-Fi & Fantasy',
-  4: 'Horror & Thriller',
-  5: 'Comedy',
-  6: 'Documentary & Educational'
-};
-
-// Mock topics data (in a real app, this would come from an API)
-const mockTopics = {
-  '101': {
-    id: 101,
-    title: 'What did everyone think of the Cosmic Odyssey ending?',
-    author: 'SpaceExplorer42',
-    date: '2 hours ago',
-    content: 'I just finished watching Cosmic Odyssey and that twist at the end completely blew my mind! The way they revealed that the entire journey was actually happening in a parallel universe was so unexpected. The visual effects in the final scene where the dimensions merged were absolutely stunning. What did everyone else think about the ending? Did you see the twist coming?',
-    replies: 24,
-    views: 142,
-    category: 3
-  },
-  '102': {
-    id: 102,
-    title: 'The Last Detective - Plot holes discussion [SPOILERS]',
-    author: 'MysteryFan',
-    date: '5 hours ago',
-    content: 'I noticed several inconsistencies in the storyline of The Last Detective, especially in the final act. The biggest plot hole seems to be how the detective knew about the warehouse location without any prior clues leading there. Also, the missing evidence from the third episode was never explained. Has anyone else noticed these issues?',
-    replies: 18,
-    views: 97,
-    category: 4
-  },
-  '103': {
-    id: 103,
-    title: 'Whispers of the Heart made me cry - emotional impact thread',
-    author: 'FilmBuff2023',
-    date: '1 day ago',
-    content: 'I just finished watching Whispers of the Heart and I\'m still emotional. The way they portrayed the relationship between the main characters was so genuine and heartfelt. The scene where they finally reunite after years apart brought me to tears. The musical score during that moment was perfect. Would love to hear about moments that touched you the most.',
-    replies: 32,
-    views: 215,
-    category: 2
-  }
-};
-
-// Mock replies data
-const mockReplies = {
-  '101': [
-    {
-      id: 1,
-      author: 'CinematicDreamer',
-      date: '1 hour ago',
-      content: 'The ending was incredible! I had to watch it twice to catch all the subtle hints they planted throughout the movie. The parallel universe theory actually explains so many of the "inconsistencies" we noticed earlier in the film.'
-    },
-    {
-      id: 2,
-      author: 'SciFiLover',
-      date: '45 minutes ago',
-      content: 'I actually predicted something similar around the halfway point, but the execution still blew me away. The visual effects team deserves an award for that final sequence!'
-    }
-  ],
-  '102': [
-    {
-      id: 1,
-      author: 'DetectiveNoir',
-      date: '3 hours ago',
-      content: 'The warehouse plot hole bothered me too! I think they might have cut a scene that explained it, because there was a brief mention of an informant in episode 5 that never went anywhere.'
-    }
-  ],
-  '103': [
-    {
-      id: 1,
-      author: 'MovieBuff',
-      date: '12 hours ago',
-      content: 'The reunion scene was perfectly executed. The way they used silence and then gradually brought in the music was masterful. I also loved how they showed the characters had grown but still retained their core personalities.'
-    },
-    {
-      id: 2,
-      author: 'EmotionalViewer',
-      date: '6 hours ago',
-      content: 'I couldn\'t stop crying during the letter reading scene. The voice acting was so genuine and heartfelt. This movie really knows how to portray deep emotions without being melodramatic.'
-    }
-  ]
-};
-
-function getCategoryName(categoryId) {
-  return categories[categoryId] || 'Unknown Category';
-}
+const categories = ref({});
 
 async function loadTopic() {
   loading.value = true;
   error.value = null;
   
   try {
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
     const topicId = route.params.id;
-    const mockTopic = mockTopics[topicId];
     
-    if (!mockTopic) {
+    // Load categories
+    const categoriesResponse = await fetch('/forum-categories.json');
+    const categoriesData = await categoriesResponse.json();
+    // Convert categories array to an object for easier lookup
+    categoriesData.forEach(cat => {
+      categories.value[cat.id] = cat.name;
+    });
+    
+    // Load topics
+    const topicsResponse = await fetch('/forum-topics.json');
+    const allTopics = await topicsResponse.json();
+    const topicData = allTopics.find(t => t.id === parseInt(topicId));
+    
+    if (!topicData) {
       throw new Error('Topic not found');
     }
     
-    topic.value = mockTopic;
-    replies.value = mockReplies[topicId] || [];
+    topic.value = topicData;
+    
+    // Load replies
+    const repliesResponse = await fetch('/forum-replies.json');
+    const allReplies = await repliesResponse.json();
+    replies.value = allReplies[topicId] || [];
     
   } catch (err) {
     error.value = err.message;
@@ -234,6 +163,10 @@ function submitReply() {
   
   replies.value.push(reply);
   newReply.value = '';
+}
+
+function getCategoryName(categoryId) {
+  return categories.value[categoryId] || 'Unknown Category';
 }
 
 onMounted(() => {

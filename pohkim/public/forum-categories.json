@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Action & Adventure",
+    "description": "Discuss high-octane action films and adventure epics",
+    "icon": "🔥",
+    "topics": 324,
+    "posts": 1892
+  },
+  {
+    "id": 2,
+    "name": "Drama & Romance",
+    "description": "Share your thoughts on dramatic and romantic stories",
+    "icon": "💔",
+    "topics": 287,
+    "posts": 1456
+  },
+  {
+    "id": 3,
+    "name": "Sci-Fi & Fantasy",
+    "description": "Explore worlds beyond our own and magical realms",
+    "icon": "🚀",
+    "topics": 412,
+    "posts": 2103
+  },
+  {
+    "id": 4,
+    "name": "Horror & Thriller",
+    "description": "For fans of spine-tingling and suspenseful content",
+    "icon": "👻",
+    "topics": 198,
+    "posts": 876
+  },
+  {
+    "id": 5,
+    "name": "Comedy",
+    "description": "Laugh and discuss your favorite comedies",
+    "icon": "😂",
+    "topics": 231,
+    "posts": 1204
+  },
+  {
+    "id": 6,
+    "name": "Documentary & Educational",
+    "description": "Learn and discuss informative content",
+    "icon": "🧠",
+    "topics": 156,
+    "posts": 723
+  }
+] 

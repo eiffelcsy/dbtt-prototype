@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <template v-else>
+    <template v-else-if="category">
       <!-- Breadcrumb -->
       <div class="flex items-center mb-6 text-sm">
         <NuxtLink to="/forum" class="text-gray-400 hover:text-white">Community</NuxtLink>
@@ -54,7 +54,7 @@
           </NuxtLink>
         </div>
 
-        <div class="bg-gray-800 rounded-lg overflow-hidden">
+        <div v-if="categoryTopics.length > 0" class="bg-gray-800 rounded-lg overflow-hidden">
           <div v-for="(topic, index) in categoryTopics" :key="topic.id" 
                :class="['p-6 flex flex-col md:flex-row md:items-center', index < categoryTopics.length - 1 ? 'border-b border-gray-700' : '']">
             <div class="flex-grow mb-4 md:mb-0">
@@ -84,7 +84,7 @@
           </div>
         </div>
 
-        <div v-if="categoryTopics.length === 0" class="text-center py-12 bg-gray-800 rounded-lg">
+        <div v-else class="text-center py-12 bg-gray-800 rounded-lg">
           <p class="text-gray-400">No topics yet in this category.</p>
           <NuxtLink to="/forum/new-topic" class="inline-block mt-4 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md transition-colors duration-200">
             Start the First Topic
@@ -103,145 +103,30 @@ const route = useRoute();
 const loading = ref(true);
 const error = ref(null);
 const category = ref(null);
-
-// Mock categories data (in a real app, this would come from a store or API)
-const categories = {
-  '1': {
-    id: 1,
-    name: 'Action & Adventure',
-    description: 'Discuss high-octane action films and adventure epics',
-    icon: '🔥',
-    topics: 324,
-    posts: 1892
-  },
-  '2': {
-    id: 2,
-    name: 'Drama & Romance',
-    description: 'Share your thoughts on dramatic and romantic stories',
-    icon: '💔',
-    topics: 287,
-    posts: 1456
-  },
-  '3': {
-    id: 3,
-    name: 'Sci-Fi & Fantasy',
-    description: 'Explore worlds beyond our own and magical realms',
-    icon: '🚀',
-    topics: 412,
-    posts: 2103
-  },
-  '4': {
-    id: 4,
-    name: 'Horror & Thriller',
-    description: 'For fans of spine-tingling and suspenseful content',
-    icon: '👻',
-    topics: 198,
-    posts: 876
-  },
-  '5': {
-    id: 5,
-    name: 'Comedy',
-    description: 'Laugh and discuss your favorite comedies',
-    icon: '😂',
-    topics: 231,
-    posts: 1204
-  },
-  '6': {
-    id: 6,
-    name: 'Documentary & Educational',
-    description: 'Learn and discuss informative content',
-    icon: '🧠',
-    topics: 156,
-    posts: 723
-  }
-};
-
-// Mock topics data
-const allTopics = [
-  {
-    id: 101,
-    title: 'What did everyone think of the Cosmic Odyssey ending?',
-    author: 'SpaceExplorer42',
-    date: '2 hours ago',
-    preview: 'I just finished watching and that twist at the end completely blew my mind! Did anyone else...',
-    replies: 24,
-    views: 142,
-    category: 3
-  },
-  {
-    id: 102,
-    title: 'The Last Detective - Plot holes discussion [SPOILERS]',
-    author: 'MysteryFan',
-    date: '5 hours ago',
-    preview: 'I noticed several inconsistencies in the storyline, especially when the detective visits the...',
-    replies: 18,
-    views: 97,
-    category: 4
-  },
-  {
-    id: 103,
-    title: 'Whispers of the Heart made me cry - emotional impact thread',
-    author: 'FilmBuff2023',
-    date: '1 day ago',
-    preview: 'I wasn\'t prepared for how emotional this film would be. The scene where the main characters...',
-    replies: 32,
-    views: 215,
-    category: 2
-  },
-  {
-    id: 104,
-    title: 'Best Action Sequences of 2023',
-    author: 'ActionFan',
-    date: '3 days ago',
-    preview: 'Let\'s compile the most impressive action sequences from this year\'s releases...',
-    replies: 45,
-    views: 280,
-    category: 1
-  },
-  {
-    id: 105,
-    title: 'Hidden Gems: Indie Comedy Collection',
-    author: 'ComedyBuff',
-    date: '4 days ago',
-    preview: 'I\'ve discovered some amazing independent comedies lately and wanted to share...',
-    replies: 27,
-    views: 165,
-    category: 5
-  },
-  {
-    id: 106,
-    title: 'Most Educational Nature Documentaries',
-    author: 'NatureExplorer',
-    date: '5 days ago',
-    preview: 'Looking for recommendations on the most informative nature documentaries...',
-    replies: 19,
-    views: 142,
-    category: 6
-  }
-];
-
-// Computed property to filter topics by category
-const categoryTopics = computed(() => {
-  const categoryId = parseInt(route.params.id);
-  return allTopics.filter(topic => topic.category === categoryId);
-});
+const categoryTopics = ref([]);
 
 async function loadCategory() {
   loading.value = true;
   error.value = null;
   
   try {
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
     const categoryId = route.params.id;
-    const categoryData = categories[categoryId];
+    
+    // Load categories
+    const categoriesResponse = await fetch('/forum-categories.json');
+    const categories = await categoriesResponse.json();
+    const categoryData = categories.find(c => c.id === parseInt(categoryId));
     
     if (!categoryData) {
       throw new Error('Category not found');
     }
     
     category.value = categoryData;
+    
+    // Load topics
+    const topicsResponse = await fetch('/forum-topics.json');
+    const allTopics = await topicsResponse.json();
+    categoryTopics.value = allTopics.filter(topic => topic.category === parseInt(categoryId));
     
   } catch (err) {
     error.value = err.message;
