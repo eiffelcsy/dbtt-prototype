@@ -53,14 +53,97 @@
         <p>No DVDs found matching your criteria.</p>
       </div>
       
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        <ProductCard 
-          v-for="product in filteredProducts" 
-          :key="product.id" 
-          :product="product" 
-          @add-to-cart="addToCart"
-          @open-overlay="openProductOverlay" 
-        />
+      <div v-else>
+        <!-- Product Count -->
+        <p class="text-gray-400 mb-4">Showing {{ paginatedProducts.length }} of {{ filteredProducts.length }} products</p>
+        
+        <!-- Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <ProductCard 
+            v-for="product in paginatedProducts" 
+            :key="product.id" 
+            :product="product" 
+            @add-to-cart="addToCart"
+            @open-overlay="openProductOverlay" 
+          />
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination flex justify-center mt-8 space-x-2">
+          <button 
+            @click="currentPage = 1" 
+            :disabled="currentPage === 1"
+            :class="[
+              'px-3 py-1 rounded',
+              currentPage === 1 ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-800 text-white hover:bg-gray-700'
+            ]"
+          >
+            First
+          </button>
+          
+          <button 
+            @click="currentPage--" 
+            :disabled="currentPage === 1"
+            :class="[
+              'px-3 py-1 rounded',
+              currentPage === 1 ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-800 text-white hover:bg-gray-700'
+            ]"
+          >
+            Prev
+          </button>
+          
+          <div class="flex space-x-1">
+            <button 
+              v-for="page in visiblePageNumbers" 
+              :key="page" 
+              @click="currentPage = page"
+              :class="[
+                'px-3 py-1 rounded',
+                currentPage === page ? 'bg-red-600 text-white' : 'bg-gray-800 text-white hover:bg-gray-700'
+              ]"
+            >
+              {{ page }}
+            </button>
+          </div>
+          
+          <button 
+            @click="currentPage++" 
+            :disabled="currentPage === totalPages"
+            :class="[
+              'px-3 py-1 rounded',
+              currentPage === totalPages ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-800 text-white hover:bg-gray-700'
+            ]"
+          >
+            Next
+          </button>
+          
+          <button 
+            @click="currentPage = totalPages" 
+            :disabled="currentPage === totalPages"
+            :class="[
+              'px-3 py-1 rounded',
+              currentPage === totalPages ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-800 text-white hover:bg-gray-700'
+            ]"
+          >
+            Last
+          </button>
+        </div>
+        
+        <!-- Page Size Selector -->
+        <div class="flex justify-center mt-4">
+          <div class="inline-flex items-center">
+            <span class="text-gray-400 mr-2">Items per page:</span>
+            <select 
+              v-model="pageSize" 
+              class="bg-gray-800 text-white rounded p-1 border border-gray-700"
+            >
+              <option :value="10">10</option>
+              <option :value="20">20</option>
+              <option :value="30">30</option>
+              <option :value="50">50</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
     
@@ -80,7 +163,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import ProductCard from '~/components/ProductCard.vue';
 import { useProductStore } from '~/composables/useProductStore';
 
@@ -93,6 +176,10 @@ const sortBy = ref('title');
 const showCartNotification = ref(false);
 const cart = ref([]);
 const productStore = useProductStore();
+
+// Pagination
+const currentPage = ref(1);
+const pageSize = ref(20);
 
 const genres = computed(() => {
   const genreSet = new Set(products.value.map(product => product.genre));
@@ -131,6 +218,83 @@ const filteredProducts = computed(() => {
   return result;
 });
 
+// Pagination
+const totalPages = computed(() => {
+  return Math.ceil(filteredProducts.value.length / pageSize.value);
+});
+
+const paginatedProducts = computed(() => {
+  const startIndex = (currentPage.value - 1) * pageSize.value;
+  const endIndex = startIndex + pageSize.value;
+  
+  // Create a copy of filtered products to prevent modifying the original array
+  let filteredProductsCopy = [...filteredProducts.value];
+  
+  // Handle featured product (ID 67)
+  let featuredProduct = null;
+  const featuredProductIndex = filteredProductsCopy.findIndex(p => p.id === 67);
+  
+  // If featured product exists and we're paginating, remove it from its original position
+  if (featuredProductIndex !== -1) {
+    featuredProduct = filteredProductsCopy.splice(featuredProductIndex, 1)[0];
+  }
+  
+  // Get the filtered products for this page
+  let products = filteredProductsCopy.slice(startIndex, endIndex);
+  
+  // If we're on the first page and we have a featured product, add it at the beginning
+  if (currentPage.value === 1 && featuredProduct) {
+    products.unshift(featuredProduct);
+    // Remove the last item if we're now over the page size
+    if (products.length > pageSize.value) {
+      products.pop();
+    }
+  }
+  
+  return products;
+});
+
+const visiblePageNumbers = computed(() => {
+  const pages = [];
+  const maxVisiblePages = 5;
+  
+  if (totalPages.value <= maxVisiblePages) {
+    // If we have 5 or fewer pages, show all of them
+    for (let i = 1; i <= totalPages.value; i++) {
+      pages.push(i);
+    }
+  } else {
+    // Always include the current page
+    pages.push(currentPage.value);
+    
+    // Add pages before the current page
+    for (let i = 1; i <= 2; i++) {
+      if (currentPage.value - i > 0) {
+        pages.unshift(currentPage.value - i);
+      }
+    }
+    
+    // Add pages after the current page
+    for (let i = 1; i <= 2; i++) {
+      if (currentPage.value + i <= totalPages.value) {
+        pages.push(currentPage.value + i);
+      }
+    }
+    
+    // If we have room for more pages at the beginning
+    while (pages.length < maxVisiblePages && pages[0] > 1) {
+      pages.unshift(pages[0] - 1);
+    }
+    
+    // If we have room for more pages at the end
+    while (pages.length < maxVisiblePages && pages[pages.length - 1] < totalPages.value) {
+      pages.push(pages[pages.length - 1] + 1);
+    }
+  }
+  
+  return pages;
+});
+
 async function loadProducts() {
   loading.value = true;
   error.value = null;
@@ -144,12 +308,12 @@ async function loadProducts() {
     
     const data = await response.json();
     
-    // Transform video data into product data with prices
+    // Transform video data into product data with prices, but respect existing price if defined
     products.value = data.map(video => ({
       ...video,
-      price: (Math.random() * 20 + 9.99).toFixed(2), // Random price between $9.99 and $29.99
-      inStock: Math.random() > 0.2, // 80% chance of being in stock
-      format: Math.random() > 0.5 ? 'DVD' : 'Blu-ray',
+      price: video.price || (Math.random() * 20 + 9.99).toFixed(2), // Use existing price if available, otherwise generate random
+      inStock: video.inStock !== undefined ? video.inStock : Math.random() > 0.2, // Respect existing inStock value if available
+      format: video.format || (Math.random() > 0.5 ? 'DVD' : 'Blu-ray'), // Respect existing format if available
     }));
   } catch (err) {
     console.error('Error loading products:', err);
@@ -191,6 +355,11 @@ function addToCart(product) {
 function openProductOverlay(product) {
   productStore.openProductOverlay(product);
 }
+
+// Reset to first page when filters change
+watch([selectedGenre, searchQuery, sortBy, pageSize], () => {
+  currentPage.value = 1;
+});
 
 onMounted(() => {
   loadProducts();

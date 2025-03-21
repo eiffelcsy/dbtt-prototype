@@ -20,7 +20,16 @@
           <div class="modal-scrollable-content">
             <!-- Video player section -->
             <div class="modal-video">
-              <p class="text-center text-gray-400">
+              <iframe 
+                v-if="product.id === 67" 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/2CrxC-3WFyQ" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+              ></iframe>
+              <p v-else class="text-center text-gray-400">
                 This is a prototype. Trailer playback would be implemented here in the production version.
               </p>
             </div>
@@ -49,8 +58,19 @@
                   
                   <p class="text-gray-300 mb-4">{{ product.description }}</p>
                   
+                  <!-- Additional info for featured products -->
+                  <div v-if="product.id === 67 && product.additionalInfo" class="mt-4 mb-6 bg-gray-800 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold text-white mb-3">Product Information</h4>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                      <div><span class="font-semibold text-gray-300">Audio:</span> <span class="text-gray-400">{{ product.additionalInfo.audio }}</span></div>
+                      <div><span class="font-semibold text-gray-300">Subtitle:</span> <span class="text-gray-400">{{ product.additionalInfo.subtitle }}</span></div>
+                      <div><span class="font-semibold text-gray-300">Episodes:</span> <span class="text-gray-400">{{ product.additionalInfo.episodes }}</span></div>
+                      <div><span class="font-semibold text-gray-300">Discs:</span> <span class="text-gray-400">{{ product.additionalInfo.discs }}</span></div>
+                    </div>
+                  </div>
+                  
                   <div class="text-gray-400">
-                    <p><span class="font-semibold text-gray-300">Director:</span> {{ product.director }}</p>
+                    <p><span class="font-semibold text-gray-300">Director:</span> {{ product.director || 'Jeffrey Chiang' }}</p>
                     <p><span class="font-semibold text-gray-300">Genre:</span> {{ product.genre }}</p>
                   </div>
                 </div>
