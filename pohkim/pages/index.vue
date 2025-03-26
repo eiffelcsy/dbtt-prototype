@@ -29,75 +29,79 @@
       <div class="container mx-auto px-4">
         <h2 class="text-3xl font-bold mb-8">Featured DVDs</h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Featured DVD 1 -->
-          <div class="bg-gray-800 rounded-lg overflow-hidden">
+        <div v-if="loading" class="flex justify-center items-center h-64">
+          <div class="loader"></div>
+        </div>
+        
+        <div v-else-if="error" class="text-center text-red-500 p-8">
+          <p>{{ error }}</p>
+        </div>
+        
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Featured DVD -->
+          <div v-if="featuredDVD" class="bg-gray-800 rounded-lg overflow-hidden">
             <div class="aspect-video bg-gradient-to-br from-red-900 to-gray-900 relative">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <span class="text-6xl font-bold text-white opacity-30">CO</span>
+              <div v-if="!featuredDVD.thumbnail" class="absolute inset-0 flex items-center justify-center">
+                <span class="text-6xl font-bold text-white opacity-30">{{ featuredDVD.title.substring(0, 2) }}</span>
               </div>
+              <img v-else :src="featuredDVD.thumbnail" :alt="featuredDVD.title" class="absolute inset-0 w-full h-full object-cover">
               <div class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
                 FEATURED
               </div>
               <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
-                <h3 class="text-2xl font-bold mb-2">Cosmic Odyssey</h3>
+                <h3 class="text-2xl font-bold mb-2">{{ featuredDVD.title }}</h3>
                 <div class="flex items-center text-sm text-gray-300 mb-2">
-                  <span>2023</span>
+                  <span>{{ new Date(featuredDVD.releaseDate).getFullYear() }}</span>
                   <span class="mx-2">•</span>
-                  <span>Sci-Fi & Fantasy</span>
+                  <span>{{ featuredDVD.genre }}</span>
                   <span class="mx-2">•</span>
-                  <span>142 min</span>
+                  <span>{{ featuredDVD.duration }}</span>
                 </div>
                 <div class="flex">
                   <span class="text-yellow-400">★★★★★</span>
-                  <span class="ml-1 text-sm">4.8/5</span>
+                  <span class="ml-1 text-sm">{{ featuredDVD.rating }}/5</span>
                 </div>
               </div>
             </div>
             <div class="p-6">
-              <p class="text-gray-300 mb-4">A mind-bending journey through space and time that challenges our understanding of reality. Follow astronaut Dr. Maya Chen as she discovers a mysterious anomaly that leads to parallel universes.</p>
+              <p class="text-gray-300 mb-4">{{ featuredDVD.description.length > 250 ? featuredDVD.description.substring(0, 250) + '...' : featuredDVD.description }}</p>
               <div class="flex gap-3">
-                <button @click="showTrailer(1)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                  Watch Trailer
-                </button>
-                <button @click="openProductOverlay(1)" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                <button @click="openProductOverlay(featuredDVD.id)" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                   Buy DVD
                 </button>
               </div>
             </div>
           </div>
           
-          <!-- Featured DVD 2 -->
-          <div class="bg-gray-800 rounded-lg overflow-hidden">
+          <!-- Second Featured DVD (if available, otherwise show a placeholder) -->
+          <div v-if="newReleases.length > 0" class="bg-gray-800 rounded-lg overflow-hidden">
             <div class="aspect-video bg-gradient-to-br from-blue-900 to-gray-900 relative">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <span class="text-6xl font-bold text-white opacity-30">DK</span>
+              <div v-if="!newReleases[0].thumbnail" class="absolute inset-0 flex items-center justify-center">
+                <span class="text-6xl font-bold text-white opacity-30">{{ newReleases[0].title.substring(0, 2) }}</span>
               </div>
+              <img v-else :src="newReleases[0].thumbnail" :alt="newReleases[0].title" class="absolute inset-0 w-full h-full object-cover">
               <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
                 NEW RELEASE
               </div>
               <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
-                <h3 class="text-2xl font-bold mb-2">Dragon Kingdom</h3>
+                <h3 class="text-2xl font-bold mb-2">{{ newReleases[0].title }}</h3>
                 <div class="flex items-center text-sm text-gray-300 mb-2">
-                  <span>2023</span>
+                  <span>{{ new Date(newReleases[0].releaseDate).getFullYear() }}</span>
                   <span class="mx-2">•</span>
-                  <span>Sci-Fi & Fantasy</span>
+                  <span>{{ newReleases[0].genre }}</span>
                   <span class="mx-2">•</span>
-                  <span>155 min</span>
+                  <span>{{ newReleases[0].duration }}</span>
                 </div>
                 <div class="flex">
                   <span class="text-yellow-400">★★★★★</span>
-                  <span class="ml-1 text-sm">4.7/5</span>
+                  <span class="ml-1 text-sm">{{ newReleases[0].rating }}/5</span>
                 </div>
               </div>
             </div>
             <div class="p-6">
-              <p class="text-gray-300 mb-4">In a magical realm where dragons and humans once lived in harmony, a young dragon rider must unite the divided kingdoms to face an ancient evil that threatens all life.</p>
+              <p class="text-gray-300 mb-4">{{ newReleases[0].description.length > 250 ? newReleases[0].description.substring(0, 250) + '...' : newReleases[0].description }}</p>
               <div class="flex gap-3">
-                <button @click="showTrailer(13)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                  Watch Trailer
-                </button>
-                <button @click="openProductOverlay(13)" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                <button @click="openProductOverlay(newReleases[0].id)" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                   Buy DVD
                 </button>
               </div>
@@ -117,24 +121,34 @@
           </NuxtLink>
         </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <div v-for="i in 4" :key="i" class="bg-gray-800 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer" @click="openNewReleaseOverlay(i)">
+        <div v-if="loading" class="flex justify-center items-center h-64">
+          <div class="loader"></div>
+        </div>
+        
+        <div v-else-if="error" class="text-center text-red-500 p-8">
+          <p>{{ error }}</p>
+        </div>
+        
+        <div v-else-if="newReleases.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div v-for="video in newReleases" :key="video.id" class="bg-gray-800 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer" @click="openProductOverlay(video.id)">
             <div class="aspect-[3/4] relative bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
-              <span class="text-4xl font-bold text-white opacity-30">{{ ['DK', 'TH', 'SC', 'SD'][i-1] }}</span>
+              <img v-if="video.thumbnail" :src="video.thumbnail" :alt="video.title" class="w-full h-full object-cover">
+              <span v-else class="text-4xl font-bold text-white opacity-30">{{ video.title.substring(0, 2) }}</span>
               
               <!-- Format Badge -->
               <div class="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                {{ ['4K Ultra HD', 'Blu-ray', 'DVD', '4K Ultra HD'][i-1] }}
+                {{ video.format }}
               </div>
             </div>
             
             <div class="p-4">
-              <h3 class="font-bold text-lg mb-1 hover:text-red-500 transition-colors">{{ ['Dragon Kingdom', 'The Haunting', 'Second Chances', 'Speed Demons'][i-1] }}</h3>
-              <p class="text-gray-400 text-sm mb-2">{{ ['Guillermo del Toro', 'Mike Flanagan', 'Richard Linklater', 'Justin Lin'][i-1] }}</p>
+              <h3 class="font-bold text-lg mb-1 hover:text-red-500 transition-colors truncate">{{ video.title }}</h3>
+              <p class="text-gray-400 text-sm mb-2 truncate">{{ video.genre }}</p>
               <div class="flex justify-between items-center">
-                <span class="font-bold">${{ [29.99, 24.99, 19.99, 29.99][i-1] }}</span>
+                <span class="font-bold">${{ video.price }}</span>
                 <div class="flex">
-                  <span class="text-yellow-400">★★★★</span><span class="text-gray-600">★</span>
+                  <span class="text-yellow-400">★★★★</span>
+                  <span class="text-sm ml-1">{{ video.rating }}</span>
                 </div>
               </div>
             </div>
@@ -224,6 +238,8 @@ import { ref, onMounted } from 'vue';
 import { useProductStore } from '~/composables/useProductStore';
 
 const videos = ref([]);
+const featuredDVD = ref(null);
+const newReleases = ref([]);
 const loading = ref(true);
 const error = ref(null);
 const showTrailerModal = ref(false);
@@ -243,45 +259,47 @@ function closeTrailer() {
 
 // Function to open product overlay
 function openProductOverlay(productId) {
-  // Find the product in the videos array or fetch it
-  const product = {
-    id: productId,
-    title: productId === 1 ? "Quantum Nexus" : "Dragon Kingdom",
-    description: productId === 1 
-      ? "A mind-bending journey through space and time that challenges our understanding of reality. Follow astronaut Dr. Maya Chen as she discovers a mysterious anomaly that leads to parallel universes."
-      : "In a magical realm where dragons and humans once lived in harmony, a young dragon rider must unite the divided kingdoms to face an ancient evil that threatens all life.",
-    rating: productId === 1 ? 4.8 : 4.7,
-    releaseDate: "2023-05-15",
-    director: "Sarah Johnson",
-    genre: productId === 1 ? "Sci-Fi" : "Fantasy",
-    price: (Math.random() * 20 + 9.99).toFixed(2),
-    inStock: true,
-    format: "4K Ultra HD",
-  };
-  
-  productStore.openProductOverlay(product);
+  const product = videos.value.find(v => v.id === productId);
+  if (product) {
+    productStore.openProductOverlay(product);
+  }
 }
 
-// Function to open product overlay for new releases
-function openNewReleaseOverlay(index) {
-  const titles = ['Dragon Kingdom', 'Time Hunters', 'Space Colony', 'Star Drifters'];
-  const genres = ['Fantasy', 'Sci-Fi', 'Adventure', 'Action'];
-  
-  const product = {
-    id: index + 10,
-    title: titles[index - 1],
-    description: `An exciting ${genres[index - 1].toLowerCase()} adventure that will keep you on the edge of your seat.`,
-    rating: 4.5 + (Math.random() * 0.5),
-    releaseDate: "2023-06-15",
-    director: "Michael Anderson",
-    genre: genres[index - 1],
-    price: (Math.random() * 20 + 9.99).toFixed(2),
-    inStock: true,
-    format: ['4K Ultra HD', 'Blu-ray', 'DVD', '4K Ultra HD'][index - 1],
-  };
-  
-  productStore.openProductOverlay(product);
+// Function to load videos from videos.json
+async function loadVideos() {
+  try {
+    const response = await fetch('/videos.json');
+    if (!response.ok) {
+      throw new Error('Failed to fetch videos');
+    }
+    
+    const data = await response.json();
+    videos.value = data;
+    
+    // Find featured DVD (ID 67)
+    featuredDVD.value = videos.value.find(video => video.id === 67);
+    
+    // If featured DVD not found, use first video as fallback
+    if (!featuredDVD.value && videos.value.length > 0) {
+      featuredDVD.value = videos.value[0];
+    }
+    
+    // Get 4 random videos for new releases
+    const randomVideos = [...videos.value]; // Create a copy
+    randomVideos.sort(() => Math.random() - 0.5); // Shuffle array
+    newReleases.value = randomVideos.slice(0, 4); // Take first 4
+    
+    loading.value = false;
+  } catch (err) {
+    console.error('Error loading videos:', err);
+    error.value = err.message;
+    loading.value = false;
+  }
 }
+
+onMounted(() => {
+  loadVideos();
+});
 </script>
 
 <style scoped>
@@ -290,5 +308,19 @@ function openNewReleaseOverlay(index) {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.loader {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #fff;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>

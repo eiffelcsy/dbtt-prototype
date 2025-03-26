@@ -1,0 +1,7 @@
+category,engagement_score,rank,sentiment,recommendation,inventory_action
+Action & Adventure,0.55,2,0.29,MAINTAIN: Good engagement indicates steady interest. Maintain current inventory levels.,Maintain current levels
+Comedy,0.35,5,0.32,SELECTIVE FOCUS: Moderate engagement suggests selective focus on popular sub-genres.,"Selective reduction, focus on high performers"
+Documentary & Educational,0.55,1,0.3,MAINTAIN: Good engagement indicates steady interest. Maintain current inventory levels.,Maintain current levels
+Drama & Romance,0.5,3,0.29,MAINTAIN: Good engagement indicates steady interest. Maintain current inventory levels.,Maintain current levels
+Horror & Thriller,0.25,6,0.07,REDUCE: Low engagement suggests limited customer interest. Consider reducing inventory.,Reduce by 10-20%
+Sci-Fi & Fantasy,0.37,4,0.2,SELECTIVE FOCUS: Moderate engagement suggests selective focus on popular sub-genres.,"Selective reduction, focus on high performers"

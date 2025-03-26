@@ -1,0 +1,129 @@
+{
+  "high_performing_categories": [
+    "Documentary & Educational",
+    "Action & Adventure",
+    "Drama & Romance"
+  ],
+  "category_recommendations": [
+    {
+      "category": "Action & Adventure",
+      "engagement_score": 0.55,
+      "rank": 2,
+      "sentiment": 0.29,
+      "recommendation": "MAINTAIN: Good engagement indicates steady interest. Maintain current inventory levels.",
+      "inventory_action": "Maintain current levels"
+    },
+    {
+      "category": "Comedy",
+      "engagement_score": 0.35,
+      "rank": 5,
+      "sentiment": 0.32,
+      "recommendation": "SELECTIVE FOCUS: Moderate engagement suggests selective focus on popular sub-genres.",
+      "inventory_action": "Selective reduction, focus on high performers"
+    },
+    {
+      "category": "Documentary & Educational",
+      "engagement_score": 0.55,
+      "rank": 1,
+      "sentiment": 0.3,
+      "recommendation": "MAINTAIN: Good engagement indicates steady interest. Maintain current inventory levels.",
+      "inventory_action": "Maintain current levels"
+    },
+    {
+      "category": "Drama & Romance",
+      "engagement_score": 0.5,
+      "rank": 3,
+      "sentiment": 0.29,
+      "recommendation": "MAINTAIN: Good engagement indicates steady interest. Maintain current inventory levels.",
+      "inventory_action": "Maintain current levels"
+    },
+    {
+      "category": "Horror & Thriller",
+      "engagement_score": 0.25,
+      "rank": 6,
+      "sentiment": 0.07,
+      "recommendation": "REDUCE: Low engagement suggests limited customer interest. Consider reducing inventory.",
+      "inventory_action": "Reduce by 10-20%"
+    },
+    {
+      "category": "Sci-Fi & Fantasy",
+      "engagement_score": 0.37,
+      "rank": 4,
+      "sentiment": 0.2,
+      "recommendation": "SELECTIVE FOCUS: Moderate engagement suggests selective focus on popular sub-genres.",
+      "inventory_action": "Selective reduction, focus on high performers"
+    }
+  ],
+  "specific_title_recommendations": [
+    {
+      "title": "Blade Runner",
+      "mentions": 19,
+      "sentiment": 0.25,
+      "acquisition_score": 11.5,
+      "recommendation": "ACQUIRE: High positive sentiment and frequent mentions indicate strong customer interest."
+    },
+    {
+      "title": "The Thing",
+      "mentions": 17,
+      "sentiment": 0.27,
+      "acquisition_score": 10.31,
+      "recommendation": "ACQUIRE: High positive sentiment and frequent mentions indicate strong customer interest."
+    },
+    {
+      "title": "Casino Night",
+      "mentions": 16,
+      "sentiment": 0.4,
+      "acquisition_score": 9.76,
+      "recommendation": "ACQUIRE: High positive sentiment and frequent mentions indicate strong customer interest."
+    },
+    {
+      "title": "The Injury",
+      "mentions": 16,
+      "sentiment": 0.4,
+      "acquisition_score": 9.76,
+      "recommendation": "ACQUIRE: High positive sentiment and frequent mentions indicate strong customer interest."
+    },
+    {
+      "title": "Stress Relief",
+      "mentions": 16,
+      "sentiment": 0.4,
+      "acquisition_score": 9.76,
+      "recommendation": "ACQUIRE: High positive sentiment and frequent mentions indicate strong customer interest."
+    },
+    {
+      "title": "Dinner Party",
+      "mentions": 16,
+      "sentiment": 0.4,
+      "acquisition_score": 9.76,
+      "recommendation": "ACQUIRE: High positive sentiment and frequent mentions indicate strong customer interest."
+    },
+    {
+      "title": "Upside Down",
+      "mentions": 15,
+      "sentiment": 0.38,
+      "acquisition_score": 9.15,
+      "recommendation": "ACQUIRE: High positive sentiment and frequent mentions indicate strong customer interest."
+    },
+    {
+      "title": "The Vecna",
+      "mentions": 15,
+      "sentiment": 0.38,
+      "acquisition_score": 9.15,
+      "recommendation": "ACQUIRE: High positive sentiment and frequent mentions indicate strong customer interest."
+    },
+    {
+      "title": "s The Thing. What are your favorite soundtrack releases? Any rare ones you",
+      "mentions": 15,
+      "sentiment": 0.26,
+      "acquisition_score": 9.11,
+      "recommendation": "ACQUIRE: High positive sentiment and frequent mentions indicate strong customer interest."
+    },
+    {
+      "title": "Meryl Streep",
+      "mentions": 14,
+      "sentiment": 0.42,
+      "acquisition_score": 8.57,
+      "recommendation": "ACQUIRE: High positive sentiment and frequent mentions indicate strong customer interest."
+    }
+  ]
+}
