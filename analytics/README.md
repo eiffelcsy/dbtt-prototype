@@ -1,92 +1,128 @@
-# DVD Retail Analytics Pipeline
+# DVD Retail Business Analytics Pipeline
 
-This analytics pipeline extracts data from the community forum, performs sentiment analysis, and generates business insights for the DVD retail business.
+This analytics pipeline processes data from the community forum in the DVD retail business web app, performs sentiment analysis, topic modeling, and trend analysis to derive actionable business insights.
 
 ## Features
 
-- **Data Ingestion**: Extracts forum data (topics, replies, categories) from JSON files
-- **Sentiment Analysis**: Analyzes sentiment of forum posts using TextBlob
-- **Business Insights**: Identifies trending titles, potential acquisitions, and category performance
-- **Inventory Recommendations**: Generates actionable recommendations for inventory management
+- **Data Ingestion**: Extract forum topics, replies, and user activity data
+- **Sentiment Analysis**: Analyze the sentiment of forum posts using transformer models
+- **Topic Modeling**: Identify key themes and topics in forum discussions
+- **Trend Analysis**: Track sentiment and engagement trends over time
+- **Business Insights**: Generate actionable recommendations for DVD retail business
+- **Interactive Dashboard**: Visualize analytics results in a web-based dashboard
 
 ## Directory Structure
 
 ```
 analytics/
-├── data/                     # Processed data files
-├── models/                   # ML models (for future use)
-├── reports/                  # Analysis reports
-│   ├── insights/             # Business insights
-│   └── sentiment/            # Sentiment analysis reports
-├── scripts/                  # Pipeline scripts
-│   ├── data_ingestion.py     # Data extraction and preprocessing
-│   ├── sentiment_analysis.py # Sentiment analysis
-│   └── business_insights.py  # Business insights generation
-├── requirements.txt          # Required Python packages
-├── run_pipeline.py           # Pipeline orchestration script
-└── README.md                 # This file
+├── config.py                  # Configuration settings
+├── data/                      # Data directory
+│   ├── models/                # Saved ML models
+│   ├── processed/             # Processed data files
+│   ├── reports/               # Analysis reports
+│   └── visualizations/        # Generated visualizations
+├── dashboard/                 # Dashboard application
+│   ├── app.py                 # Dash application
+│   └── assets/                # Dashboard assets
+├── modules/                   # Analysis modules
+│   ├── data_ingestion.py      # Forum data extraction
+│   ├── sentiment_analysis.py  # Sentiment analysis
+│   ├── topic_analysis.py      # Topic modeling and text analysis
+│   └── trend_analysis.py      # Trend analysis and reporting
+├── run_pipeline.py            # Main pipeline script
+├── requirements.txt           # Python dependencies
+└── README.md                  # This file
 ```
 
-## Installation
+## Setup
 
-1. Ensure you have Python 3.8+ installed
-2. Run the following command to install dependencies:
+1. Create a Python virtual environment:
+   ```
+   python -m venv env
+   source env/bin/activate  # On Windows: env\Scripts\activate
+   ```
 
-```bash
-pip install -r analytics/requirements.txt
-```
+2. Install the required dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
 
 ## Usage
 
+### Running the Full Pipeline
+
 To run the complete analytics pipeline:
 
-```bash
-python analytics/run_pipeline.py
+```
+python -m analytics.run_pipeline
 ```
 
-This will:
-1. Ingest data from the forum
-2. Perform sentiment analysis
-3. Generate business insights
+This will execute the following steps:
+1. Data ingestion from forum
+2. Sentiment analysis
+3. Topic modeling and text analysis
+4. Trend analysis and reporting
 
-## Individual Components
+### Running Individual Components
 
-If you want to run specific parts of the pipeline:
+You can also run individual components of the pipeline:
 
-```bash
+```
 # Data ingestion only
-python analytics/scripts/data_ingestion.py
+python -m analytics.modules.data_ingestion
 
-# Sentiment analysis only (requires data ingestion to be run first)
-python analytics/scripts/sentiment_analysis.py
+# Sentiment analysis only
+python -m analytics.modules.sentiment_analysis
 
-# Business insights only (requires sentiment analysis to be run first)
-python analytics/scripts/business_insights.py
+# Topic analysis only
+python -m analytics.modules.topic_analysis
+
+# Trend analysis only
+python -m analytics.modules.trend_analysis
 ```
 
-## Output Files
+### Launching the Dashboard
 
-### Data Files
-- `analytics/data/processed_topics.csv`: Processed forum topics
-- `analytics/data/processed_replies.csv`: Processed forum replies
-- `analytics/data/categories.csv`: Forum categories
-- `analytics/data/combined_forum_data.csv`: Combined topics and replies
-- `analytics/data/forum_data_with_sentiment.csv`: Data with sentiment analysis results
+To launch the interactive analytics dashboard:
 
-### Report Files
-- `analytics/reports/sentiment/overall_sentiment_stats.csv`: Overall sentiment statistics
-- `analytics/reports/sentiment/category_sentiment.csv`: Sentiment by category
-- `analytics/reports/sentiment/topic_vs_reply_sentiment.csv`: Comparison of topic vs. reply sentiment
-- `analytics/reports/insights/trending_titles.csv`: Trending titles from forum discussions
-- `analytics/reports/insights/acquisition_recommendations.csv`: Recommended DVDs to acquire
-- `analytics/reports/insights/category_performance.csv`: Category performance metrics
-- `analytics/reports/insights/inventory_recommendations.json`: Inventory management recommendations
-- `analytics/reports/insights/executive_summary.json`: Executive summary of findings
+```
+python -m analytics.dashboard.app
+```
+
+Then open your web browser and navigate to `http://127.0.0.1:8050/`.
+
+## Analytics Dashboard
+
+The interactive dashboard provides visualizations of:
+
+- Forum activity trends
+- Sentiment distribution by category
+- Sentiment trends over time
+- Trending topics
+- Keyword frequency
+- Business insights and recommendations
+
+## Business Value
+
+This analytics pipeline provides valuable insights for the DVD retail business:
+
+1. **Inventory Management**: Identify popular topics and sentiment to guide DVD purchasing decisions
+2. **Marketing Strategy**: Target marketing efforts based on trending discussions and customer sentiment
+3. **Customer Experience**: Address negative sentiment topics and amplify positive sentiment drivers
+4. **Content Strategy**: Develop blog posts and content around topics of interest
+5. **Competitive Intelligence**: Understand competitors mentioned in forum discussions
+
+## Technical Details
+
+- **Sentiment Analysis**: Uses DistilBERT transformer model fine-tuned on SST-2 dataset
+- **Topic Modeling**: Employs Latent Dirichlet Allocation (LDA) for topic extraction
+- **Data Visualization**: Combines matplotlib/seaborn for static visuals and Plotly/Dash for interactive dashboard
+- **NLP**: Uses NLTK for text processing and analysis
 
 ## Future Enhancements
 
-- Advanced sentiment analysis using transformers
-- Named entity recognition for more accurate movie title extraction
-- Time-series analysis of sentiment trends
-- Competitor analysis from forum discussions
-- Integration with sales data for revenue impact predictions 
+- Real-time analytics via streaming pipeline
+- User segmentation based on forum behavior
+- Integration with sales data for correlation analysis
+- Automated recommendations for inventory management
+- Anomaly detection for unusual forum activity

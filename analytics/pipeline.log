@@ -1,0 +1,112 @@
+2025-03-30 21:23:47,078 - __main__ - INFO - Starting DVD retail business analytics pipeline
+2025-03-30 21:23:47,078 - __main__ - INFO - Step 1: Data Ingestion
+2025-03-30 21:23:47,366 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-topics.json
+2025-03-30 21:23:47,367 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-replies.json
+2025-03-30 21:23:47,367 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-categories.json
+2025-03-30 21:23:47,367 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-stats.json
+2025-03-30 21:23:47,373 - __main__ - ERROR - Error in analytics pipeline: All arrays must be of the same length
+2025-03-30 21:23:47,373 - __main__ - ERROR - Stack trace:
+Traceback (most recent call last):
+  File "/Users/chongeiffel/Projects/dbtt-prototype/analytics/run_pipeline.py", line 37, in run_pipeline
+    topics_df, replies_df, categories_df, stats_data = get_forum_data()
+                                                       ~~~~~~~~~~~~~~^^
+  File "/Users/chongeiffel/Projects/dbtt-prototype/analytics/modules/data_ingestion.py", line 152, in get_forum_data
+    replies_df = process_replies_data(replies_data)
+  File "/Users/chongeiffel/Projects/dbtt-prototype/analytics/modules/data_ingestion.py", line 113, in process_replies_data
+    df_replies = pd.DataFrame(replies_data)
+  File "/Users/chongeiffel/Projects/dbtt-prototype/dbtt-env/lib/python3.13/site-packages/pandas/core/frame.py", line 778, in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy, typ=manager)
+  File "/Users/chongeiffel/Projects/dbtt-prototype/dbtt-env/lib/python3.13/site-packages/pandas/core/internals/construction.py", line 503, in dict_to_mgr
+    return arrays_to_mgr(arrays, columns, index, dtype=dtype, typ=typ, consolidate=copy)
+  File "/Users/chongeiffel/Projects/dbtt-prototype/dbtt-env/lib/python3.13/site-packages/pandas/core/internals/construction.py", line 114, in arrays_to_mgr
+    index = _extract_index(arrays)
+  File "/Users/chongeiffel/Projects/dbtt-prototype/dbtt-env/lib/python3.13/site-packages/pandas/core/internals/construction.py", line 677, in _extract_index
+    raise ValueError("All arrays must be of the same length")
+ValueError: All arrays must be of the same length
+2025-03-30 21:23:47,376 - __main__ - INFO - Analytics pipeline failed after 0.30 seconds
+2025-03-30 21:25:11,739 - __main__ - INFO - Starting DVD retail business analytics pipeline
+2025-03-30 21:25:11,740 - __main__ - INFO - Step 1: Data Ingestion
+2025-03-30 21:25:11,977 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-topics.json
+2025-03-30 21:25:11,978 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-replies.json
+2025-03-30 21:25:11,978 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-categories.json
+2025-03-30 21:25:11,978 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-stats.json
+2025-03-30 21:25:11,981 - modules.data_ingestion - WARNING - Dictionary has inconsistent lengths, padding shorter arrays
+2025-03-30 21:25:11,984 - modules.data_ingestion - INFO - Saved processed topics data to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/topics.csv
+2025-03-30 21:25:11,985 - modules.data_ingestion - INFO - Saved processed replies data to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/replies.csv
+2025-03-30 21:25:11,985 - modules.data_ingestion - INFO - Saved processed categories data to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/categories.csv
+2025-03-30 21:25:11,985 - __main__ - INFO - Loaded 280 topics, 3 replies, 6 categories
+2025-03-30 21:25:11,985 - __main__ - INFO - Step 2: Sentiment Analysis
+2025-03-30 21:25:11,986 - __main__ - ERROR - Error in analytics pipeline: No module named 'torch'
+2025-03-30 21:25:11,986 - __main__ - ERROR - Stack trace:
+Traceback (most recent call last):
+  File "/Users/chongeiffel/Projects/dbtt-prototype/analytics/run_pipeline.py", line 44, in run_pipeline
+    from modules.sentiment_analysis import analyze_forum_sentiment
+  File "/Users/chongeiffel/Projects/dbtt-prototype/analytics/modules/sentiment_analysis.py", line 11, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+2025-03-30 21:25:11,986 - __main__ - INFO - Analytics pipeline failed after 0.25 seconds
+2025-03-30 21:26:11,996 - __main__ - INFO - Starting DVD retail business analytics pipeline
+2025-03-30 21:26:11,996 - __main__ - INFO - Step 1: Data Ingestion
+2025-03-30 21:26:12,219 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-topics.json
+2025-03-30 21:26:12,219 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-replies.json
+2025-03-30 21:26:12,219 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-categories.json
+2025-03-30 21:26:12,219 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-stats.json
+2025-03-30 21:26:12,224 - modules.data_ingestion - WARNING - Dictionary has inconsistent lengths, padding shorter arrays
+2025-03-30 21:26:12,228 - modules.data_ingestion - INFO - Saved processed topics data to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/topics.csv
+2025-03-30 21:26:12,228 - modules.data_ingestion - INFO - Saved processed replies data to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/replies.csv
+2025-03-30 21:26:12,229 - modules.data_ingestion - INFO - Saved processed categories data to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/categories.csv
+2025-03-30 21:26:12,229 - __main__ - INFO - Loaded 280 topics, 3 replies, 6 categories
+2025-03-30 21:26:12,229 - __main__ - INFO - Step 2: Sentiment Analysis
+2025-03-30 21:26:15,289 - __main__ - ERROR - Error in analytics pipeline: No module named 'transformers'
+2025-03-30 21:26:15,289 - __main__ - ERROR - Stack trace:
+Traceback (most recent call last):
+  File "/Users/chongeiffel/Projects/dbtt-prototype/analytics/run_pipeline.py", line 44, in run_pipeline
+    from modules.sentiment_analysis import analyze_forum_sentiment
+  File "/Users/chongeiffel/Projects/dbtt-prototype/analytics/modules/sentiment_analysis.py", line 12, in <module>
+    from transformers import AutoTokenizer, AutoModelForSequenceClassification
+ModuleNotFoundError: No module named 'transformers'
+2025-03-30 21:26:15,289 - __main__ - INFO - Analytics pipeline failed after 3.29 seconds
+2025-03-30 21:31:43,797 - __main__ - INFO - Starting DVD retail business analytics pipeline
+2025-03-30 21:31:43,797 - __main__ - INFO - Step 1: Data Ingestion
+2025-03-30 21:31:49,338 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-topics.json
+2025-03-30 21:31:49,338 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-replies.json
+2025-03-30 21:31:49,338 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-categories.json
+2025-03-30 21:31:49,338 - modules.data_ingestion - INFO - Successfully loaded data from /Users/chongeiffel/Projects/dbtt-prototype/pohkim/public/forum-stats.json
+2025-03-30 21:31:49,340 - modules.data_ingestion - WARNING - Dictionary has inconsistent lengths, padding shorter arrays
+2025-03-30 21:31:49,344 - modules.data_ingestion - INFO - Saved processed topics data to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/topics.csv
+2025-03-30 21:31:49,344 - modules.data_ingestion - INFO - Saved processed replies data to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/replies.csv
+2025-03-30 21:31:49,345 - modules.data_ingestion - INFO - Saved processed categories data to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/categories.csv
+2025-03-30 21:31:49,345 - __main__ - INFO - Loaded 280 topics, 3 replies, 6 categories
+2025-03-30 21:31:49,345 - __main__ - INFO - Step 2: Sentiment Analysis
+2025-03-30 21:32:06,908 - modules.sentiment_analysis - INFO - Loaded 280 topics for sentiment analysis
+2025-03-30 21:32:06,908 - modules.sentiment_analysis - INFO - Using device: cpu
+2025-03-30 21:32:06,908 - modules.sentiment_analysis - INFO - Loading tokenizer and model: distilbert-base-uncased-finetuned-sst-2-english
+2025-03-30 21:32:15,162 - modules.sentiment_analysis - INFO - Tokenizer and model loaded successfully
+2025-03-30 21:32:15,163 - modules.sentiment_analysis - INFO - Analyzing sentiment for 280 texts
+2025-03-30 21:32:17,403 - modules.sentiment_analysis - INFO - Saved sentiment analysis results to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/topics_sentiment.csv
+2025-03-30 21:32:17,407 - __main__ - INFO - Completed sentiment analysis on 280 forum posts
+2025-03-30 21:32:17,407 - __main__ - INFO - Step 3: Topic Modeling and Text Analysis
+2025-03-30 21:32:22,694 - modules.topic_analysis - INFO - Loaded 280 topics for text analysis
+2025-03-30 21:32:22,770 - modules.topic_analysis - INFO - NLTK resources downloaded successfully
+2025-03-30 21:32:22,770 - modules.topic_analysis - INFO - Preprocessing forum texts
+2025-03-30 21:32:23,678 - modules.topic_analysis - INFO - Word cloud saved to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/visualizations/forum_topics_wordcloud.png
+2025-03-30 21:32:23,678 - modules.topic_analysis - INFO - Extracting key topics from forum posts
+2025-03-30 21:32:23,771 - modules.topic_analysis - INFO - Saved key topics to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/forum_key_topics.csv
+2025-03-30 21:32:23,900 - __main__ - INFO - Completed topic modeling and text analysis
+2025-03-30 21:32:23,900 - __main__ - INFO - Step 4: Trend Analysis and Reporting
+2025-03-30 21:32:25,138 - modules.trend_analysis - INFO - Running trend analyses to generate comprehensive report
+2025-03-30 21:32:25,148 - modules.trend_analysis - INFO - Saved sentiment by category analysis to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/sentiment_by_category.csv
+2025-03-30 21:32:25,303 - modules.trend_analysis - INFO - Saved activity trends by week to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/activity_trends_week.csv
+2025-03-30 21:32:25,311 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-30 21:32:25,311 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-30 21:32:25,314 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-30 21:32:25,314 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-30 21:32:25,480 - modules.trend_analysis - INFO - Saved trending topics to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/trending_topics.csv
+2025-03-30 21:32:25,658 - modules.trend_analysis - INFO - Saved sentiment trends by week to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/processed/sentiment_trends_week.csv
+2025-03-30 21:32:25,666 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-30 21:32:25,666 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-30 21:32:25,668 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-30 21:32:25,668 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-03-30 21:32:25,810 - modules.trend_analysis - INFO - Saved comprehensive trend report to /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/reports/forum_trend_report_20250330.md
+2025-03-30 21:32:25,810 - __main__ - INFO - Generated trend analysis report: /Users/chongeiffel/Projects/dbtt-prototype/analytics/data/reports/forum_trend_report_20250330.md
+2025-03-30 21:32:25,810 - __main__ - INFO - Analytics pipeline completed successfully in 42.01 seconds
